@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag 'index', :media => "all" %>
+<br>
+<br>
+<br>
+
+<div class="post-container">
+    <p class="title">視聴予定投稿編集</p>
+
+<%= form_for @post do |f| %>
+    <div class="field">
+        <p><%= f.label :視聴タイトル %></p>
+        <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :視聴イメージ画像 %></p>
+        <p><%= f.file_field :image %></p>
+    </div>
+        <div class="field">
+        <p><%= f.label :視聴ツール %></p>
+        <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "Youtube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :紹介 %></p>
+        <p><%= f.text_field :body,:placeholder => "例：NetflixとかAmazonPrimeで配信してます！ホラー系です！", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :zoomリンク %></p>
+        <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :視聴予定時刻 %></p>
+        <p><%= f.datetime_field :time %></p>
+    </div>
+    <%= f.submit "編集する" %>
+<% end %>
+</div>

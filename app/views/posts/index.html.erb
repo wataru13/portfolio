@@ -1,0 +1,140 @@
+
+<%#<% if user_signed_in? %>
+<%#<%= link_to "マイページへ", user_path(current_user.id) %>　
+<%#<% end %>
+<br>
+<br>
+<br>
+<br>
+
+<%= stylesheet_link_tag 'index', :media => "all" %>
+    <body>
+        <section id="first-block">
+            <div class="title-container">
+                <h1>リモートリアルタイム感情共有</h1>
+                <h3>~ 気持ちを繋げよう ~</h3>
+            </div>
+        </section>
+    </body>
+    
+
+
+<div class="posts-container">
+
+<h3>投稿を検索</h3>
+    <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+        <%= text_area_tag :search ,:placeholder => "キーワードを入力" %>
+        <%= submit_tag '検索する' %>
+    <% end %>
+
+<%= page_entries_info @posts %>
+
+    <p><h3>投稿一覧</h3></p>
+    <% @posts.each do |t| %>
+        <div class="post">
+            <div class="main-box">
+                <div class="left-container">
+                    <%= t.title %>
+                    <p><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
+                </div>
+                <div class="right-container">
+                <p>投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
+                <p>投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
+                <p>タイトル：<%= t.title %></p>
+                <p>視聴ツール：<%= t.genre %></p>
+                <p>視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
+                参加する
+
+
+            <% if user_signed_in? %>
+                <% if current_user.already_liked?(t) %>
+                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
+                    <% end %>
+                <% else %>
+                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                        <i class="far fa-grin-squint"></i></i><%= t.likes.count %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-grin-squint"></i><%= t.likes.count %>
+            <% end %>
+            <br>
+
+
+
+
+            <p><%= link_to "詳細へ", post_path(t.id) %></p>
+
+
+                <% if user_signed_in? && current_user.id == t.user_id %>  
+                    <%= link_to edit_post_path(t.id)  do %>
+                        <i class="fas fa-wrench"></i>
+                    <% end %>
+                    <br>
+                    <%= link_to post_path(t.id), method: :delete do %>
+                        <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                <% end %>
+
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+        <%= paginate @posts %>
+        
+
+    <br>
+    <%= link_to 'TV', :controller => "posts", :action => "tv" %>
+    <%= link_to 'YouTube', :controller => "posts", :action => "youtube" %>
+    <%= link_to 'Netflix', :controller => "posts", :action => "netflix" %>
+    <%= link_to 'AmazonPrime', :controller => "posts", :action => "amazonprime" %>
+    <%= link_to 'Hulu', :controller => "posts", :action => "hulu" %>
+    <%= link_to 'DAZN', :controller => "posts", :action => "dazn" %>
+    <%= link_to 'その他', :controller => "posts", :action => "other" %>
+
+</div>
+
+
+<%= stylesheet_link_tag 'new', :media => "all" %>
+
+
+
+
+<div class="post-container">
+    <p class="title">新規視聴予定投稿</p>
+<br>
+
+<%= form_for @post do |f| %>
+    <div class="field">
+    <div class="field">
+        <p><%= f.label :視聴タイトル %></p>
+        <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :視聴イメージ画像 %></p>
+        <p><%= f.file_field :image %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :視聴ツール %></p>
+        <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "YouTube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :紹介 %></p>
+        <p><%= f.text_field :body,:placeholder => "例：ホラー系です！一緒に絶叫しましょう！", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :zoomリンク %></p>
+        <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140 %></p>
+    </div>
+    <div class="field">
+        <p><%= f.label :視聴予定時刻 %></p>
+        <p><%= f.datetime_field :time %></p>
+    </div>
+    
+    <%= f.submit "投稿する" %>
+<% end %>
+
+
+

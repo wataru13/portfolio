@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+
+  <head>
+    <title>Share2</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <h1>RemoteShare</h1>
+      <div class="header-list">
+      <ul>
+        <li><%= link_to "ホーム", posts_path %></li>
+        <li><%= link_to "新規投稿",new_post_path %></li>
+        <li><%= link_to "Users一覧", users_path %></li>
+      </ul>
+      </div>
+
+
+
+        <% if current_user%>
+          <li><%= link_to "マイページ", user_path(current_user.id) %></li>　
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to "ログイン", posts_path %>
+          <%= link_to "新規登録", new_user_registration_path %>
+        <% end %>
+    </header>
+    <main>
+      <%= yield %>
+    </main>
+    <footer>
+      <p>Copyright © GeekSalon All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
+
+
+<div class="nokosi">
+	<div class="cp_offcm04">
+		<input type="checkbox" id="cp_toggle04">
+		<label for="cp_toggle04"><span></span></label>
+		<div class="cp_menu">
+		<ul>
+    <% if current_user%>
+    <li><%= link_to 'ホーム', :controller => "posts", :action => "index" %></li>
+    <li><%= link_to '新規投稿', :controller => "posts", :action => "new" %></li>
+    <li><%= link_to 'User一覧', :controller => "users", :action => "index" %></li>
+    <li><%= link_to 'TV', :controller => "posts", :action => "tv" %></li>
+    <li><%= link_to 'YouTube', :controller => "posts", :action => "youtube" %></li>
+    <li><%= link_to 'Netflix', :controller => "posts", :action => "netflix" %></li>
+    <li><%= link_to 'AmazonPrime', :controller => "posts", :action => "amazonprime" %></li>
+    <li><%= link_to 'Hulu', :controller => "posts", :action => "hulu" %></li>
+    <li><%= link_to 'DAZN', :controller => "posts", :action => "dazn" %></li>
+    <li><%= link_to 'その他', :controller => "posts", :action => "other" %></li>
+    <% end %>
+		</ul>
+		</div>
+	</div>
+</div>
+
