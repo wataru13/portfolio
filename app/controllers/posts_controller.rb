@@ -8,9 +8,9 @@ class PostsController < ApplicationController
             @posts= Post.all
         else
             #部分検索
-            @posts = Post.where("body LIKE ? ",'%' + params[:search] + '%')
+            @posts = Post.where("title LIKE ? ",'%' + params[:search] + '%').order(created_at: :desc)
         end
-        @posts = @posts.order(created_at: :desc).page(params[:page]).per(3)
+        @posts = @posts.order(created_at: :desc).page(params[:page]).per(6)
 
         @post = Post.new
     end
@@ -57,6 +57,7 @@ class PostsController < ApplicationController
 
     def tv
         @tvs = Post.where(genre: "TV").order(created_at: :desc)
+        @post = Post.new
     end
     def youtube
         @youtubes = Post.where(genre: "YouTube").order(created_at: :desc)
@@ -66,12 +67,15 @@ class PostsController < ApplicationController
     end
     def amazonprime
         @amazonprimes = Post.where(genre: "Amazon Prime").order(created_at: :desc)
+        
+        @post = Post.new
     end
     def hulu
         @hulus = Post.where(genre: "Hulu").order(created_at: :desc)
     end
     def dazn
         @dazns = Post.where(genre: "DAZN").order(created_at: :desc)
+        
     end
     def other
         @others = Post.where(genre: "その他").order(created_at: :desc)

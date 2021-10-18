@@ -1,0 +1,170 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+        <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/css/reset.css">
+        <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/css/5-7.css">
+        <%= stylesheet_link_tag 'toppage', :media => "all" %>
+    </head>
+    <body>
+        <div class= "margin">
+        </div>
+        <div id="particles-js">
+        </div>
+        <div id="wrapper">
+            <div class="caaa">
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1>リモシェア</h1>
+                <br>
+                <br>
+                <h3>リモートで感情共有して</h3>
+                <h3>繋がりを感じよう</h3>
+                <br>
+                <a href="/posts" class="btn-box">ログイン</a>
+                <br>
+                <br>
+                <a href="/users/sign_up" class="btn-box">新規登録</a>
+                <br>
+                <br>
+                <div class="box26">
+                    <span class="box-title">活用例1</span>
+                    <p>①視聴予定の動画配信・TV等を投稿しよう</p>
+                    <p>②時間になったら、参加者と一緒にzoomを繋ぎながら同時視聴し感情を共有させよう</p>
+                </div>
+                <div class="box26">
+                    <span class="box-title">活用例2</span>
+                    <p>①興味や時間の都合のある投稿を探して、そのユーザーをフォローし参加ボタンを押そう</p>
+                    <p>②時間になったら、投稿者一緒にzoomを繋ぎながら同時視聴し感情を共有させよう</p>
+                </div>
+                <div class="box26">
+                    <span class="box-title">活用例3</span>
+                    <p>①時間都合が合わずに同時視聴できなかったとしても、</p>
+                    <p>コメント機能やDM機能を使用して、動画の感想などを伝えて盛り上がろう</p>
+                </div>
+                </div>
+        <!--/wrapper-->
+        </div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/js/5-7.js"></script>
+    </body>
+</html>
+
+<style>
+@charset "utf-8";
+
+/*========= レイアウトのためのCSS ===============*/
+
+#wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  color: #fff;
+}
+a{
+  color: #fff;
+}
+
+/*========= particle js を描画するエリア設定 ===============*/
+
+html,body{
+  height: 100%;/*高さを100%にして描画エリアをとる*/
+}
+
+#particles-js{ 
+  position:fixed;/*描画固定*/
+  z-index:-1;/*描画を一番下に*/
+  width: 100%;
+  height: 100%;
+  background-color:#000;/*背景色*/
+}
+
+#wrapper{
+  position: relative;/*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+  z-index: 1;/*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+  width:100%;
+  height: 100%;
+}
+</style>
+
+<script>
+particlesJS("particles-js",{
+  "particles":{
+    "number":{
+      "value":50,//この数値を変更するとホタルの数が増減できる
+      "density":{
+        "enable":true,
+        "value_area":1602.3971861905397
+      }
+    },
+    "color":{
+      "value":"#f3fa8b"//色
+    },
+    "shape":{
+      "type":"circle",//形状はcircleを指定
+      "stroke":{
+        "width":0,
+      }
+    },
+    "opacity":{
+      "value":1,
+      "random":true,//透過をランダムに
+      "anim":{
+        "enable":false,
+        "speed":1.10115236356258881,
+        "opacity_min":0,
+        "sync":false
+      }
+    },
+    "size":{
+      "value":4.005992965476349,
+      "random":true,//サイズをランダムに
+      "anim":{
+        "enable":true,
+        "speed":24.345709068776642,
+        "size_min":0.1,
+        "sync":false
+      }
+    },
+    "line_linked":{
+      "enable":false,
+    },
+    "move":{
+      "enable":true,
+      "speed":6,//この数値を小さくするとゆっくりな動きになる
+      "direction":"none",//方向指定なし
+      "random":true,//動きはランダムに
+      "straight":false,//動きをとどめない
+      "out_mode":"out",//画面の外に出るように描写
+      "bounce":false,//跳ね返りなし
+      "attract":{
+        "enable":false,
+        "rotateX":600,
+        "rotateY":600
+      }
+    }
+  },
+  "interactivity":{
+    "detect_on":"canvas",
+    "events":{
+      "onhover":{
+        "enable":false
+      },
+      "onclick":{
+        "enable":false
+      },
+      "resize":true
+    }
+  },
+  "retina_detect":true
+});
+</script>

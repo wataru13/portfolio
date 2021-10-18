@@ -2,21 +2,80 @@
 <br>
 <br>
 
-
-<% provide(:title, 'All users') %>
-<h1>ユーザー一覧</h1>
-
-    <%= form_tag({controller:"users",action:"index"}, method: :get) do %>
-        <%= text_field_tag :search %>
-        <%= submit_tag '検索する'  %>
-    <% end %>
-<%#%↑うまくいっていない%>
-
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user %>
-    </li>
-    <p><%= image_tag user.image_url, size: "250x200" if user.image? %></p>
+<div class="netflix">
+  <h1>Users</h1>
+  <% provide(:title, 'All users') %>
+  <%#検索%>
+  <%= form_tag({controller:"users",action:"index"}, method: :get) do %>
+      <%= text_field_tag :search,"", :placeholder => "ユーザー名を入力" %>
+      <%= submit_tag '検索する' %>
   <% end %>
-</ul>
+  <%#検索%>
+  <form action="/users" accept-charset="UTF-8" method="get" >
+    <input type="text" name="search" id="search">
+    <button name ="button" type="submit" class="btn btn default">
+      <i class="fas fa-search fa-2x"></i>
+    </button>
+  </form>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 col-lg-offset-5 col-lg-2"></div>
+    </div>
+</div>
+<div class="users-container container">
+  <% @users.each do |user| %>
+    <div class="users row">
+      <div class="main-box col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 col-lg-offset-5 col-lg-2">
+        <div class="left-container">
+          <p><%= image_tag user.image_url, size: "100x100", class:"rounded-circle" if user.image? %>
+        </div>
+            <%#= link_to "フォロー", followings_path(user.id) %>
+            <%#= link_to "フォロワー", followers_path(user.id) %>
+        <div class="right-container">
+          <h3><%= link_to user.name, user %></h3>
+            <% if current_user.following?(user) && user.following?(current_user) %>
+              [相互フォローしています]
+            <% else %>
+              <% if user.following?(current_user) %>
+                <p>[followされています]</p>
+              <%else%>
+                <% if current_user.following?(user) %>
+                  <p>[followしています]</p>
+                <% end %>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="container">
+  <% @users.each do |user| %>
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 col-lg-offset-5 col-lg-2">
+        <div class="left-container">
+          <p><%= image_tag user.image_url, size: "100x100", class:"rounded-circle" if user.image? %>
+        </div>
+            <%#= link_to "フォロー", followings_path(user.id) %>
+            <%#= link_to "フォロワー", followers_path(user.id) %>
+        <div class="right-container">
+          <h3><%= link_to user.name, user %></h3>
+            <% if current_user.following?(user) && user.following?(current_user) %>
+              [相互フォローしています]
+            <% else %>
+              <% if user.following?(current_user) %>
+                <p>[followされています]</p>
+              <%else%>
+                <% if current_user.following?(user) %>
+                  <p>[followしています]</p>
+                <% end %>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<br>
+<br>

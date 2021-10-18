@@ -1,7 +1,14 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, :only => [:show]
+    before_action :authenticate_user!, :only => [:show, :index]
     def index
-        @users=User.all
+        if params[:search] == nil
+            @users=User.all
+        elsif params[:search] == ''
+            @users= User.all
+        else
+            #部分検索
+            @users = User.where("name LIKE ? ",'%' + params[:search] + '%').order(created_at: :desc)
+        end
     end
 
     def show
@@ -23,6 +30,23 @@ class UsersController < ApplicationController
                 @room = Room.new
                 @entry = Entry.new
             end
+
+        #     @followings = current_user.following
+        #     @followings.each do |f|
+        #         if f.id ==@user.id
+        #         end
+        #     end
         end
+        def followings
+            @user=User.find(params[:id])
+            # @users = @user.followings
+        end
+        def followers
+            @user=User.find(params[:id])
+            # @users = @user.followers
+        end
+        
+        
     end
+
 end

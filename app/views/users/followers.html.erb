@@ -1,0 +1,5 @@
+    <p>フォロワー</p>
+    <% @user.followers.each do |u| %>
+        <li><%= image_tag u.image_url, size: "50x50" if u.image? %></li>
+        <li><%= u.name %></li>
+    <% end %>

@@ -1,70 +1,103 @@
 <!DOCTYPE html>
 <html>
-
-
   <head>
-    <title>Share2</title>
+    <title>Remoshare</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag('favicon.ico') %>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   </head>
-
   <body>
     <header>
-      <h1>RemoteShare</h1>
       <div class="header-list">
-      <ul>
-        <li><%= link_to "ホーム", posts_path %></li>
-        <li><%= link_to "新規投稿",new_post_path %></li>
-        <li><%= link_to "Users一覧", users_path %></li>
-      </ul>
+
+        <ul>
+          <h1><%= link_to "リモシェア", posts_path %></h1>
+          <%#= link_to "新規投稿",new_post_path %>
+          <li><a class="create-button" href="/posts/new">
+          <i class="fas fa-pen fa-2x"></i>
+          <%#Create%>
+          </li>
+
+          <li>
+            <%= link_to users_path do %>
+              <i class="fas fa-users fa-2x"></i>
+            <% end %>
+          </li>
+          <% if current_user%>
+            <li>
+              <a href="/users/<%= current_user.id %>">
+              <i class="fas fa-user fa-2x"></i><%= current_user.name %></a>
+            </li>
+            <%#<li><%= link_to "〇〇", user_path(current_user.id) %>　
+            <%#= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+            <li>
+              <%= link_to destroy_user_session_path, method: :delete do %>
+                <i class="fas fa-sign-out-alt fa-2x"></i>
+              <%end%>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to posts_path do %>
+                <i class="fas fa-sign-in-alt fa-2x"></i>
+              <%end%>
+            </li>
+            <li>
+              <%= link_to new_user_registration_path do %>
+                <i class="fas fa-user-plus fa-2x"></i>
+              <%end%>
+            </li>
+          <% end %>
+        </ul>
       </div>
-
-
-
-        <% if current_user%>
-          <li><%= link_to "マイページ", user_path(current_user.id) %></li>　
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-        <% else %>
-          <%= link_to "ログイン", posts_path %>
-          <%= link_to "新規登録", new_user_registration_path %>
-        <% end %>
     </header>
     <main>
       <%= yield %>
     </main>
     <footer>
-      <p>Copyright © GeekSalon All Rights Reserved.</p>
+      <p>Copyright © 2021 WataruShinoda All Rights Reserved.</p>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
 
 
-<div class="nokosi">
-	<div class="cp_offcm04">
-		<input type="checkbox" id="cp_toggle04">
-		<label for="cp_toggle04"><span></span></label>
+
+<%#div class="cp_cont">
+	<div class="cp_offcm01">
+		<input type="checkbox" id="cp_toggle01">
+		<label for="cp_toggle01"><span></span></label>
 		<div class="cp_menu">
 		<ul>
-    <% if current_user%>
-    <li><%= link_to 'ホーム', :controller => "posts", :action => "index" %></li>
-    <li><%= link_to '新規投稿', :controller => "posts", :action => "new" %></li>
-    <li><%= link_to 'User一覧', :controller => "users", :action => "index" %></li>
-    <li><%= link_to 'TV', :controller => "posts", :action => "tv" %></li>
-    <li><%= link_to 'YouTube', :controller => "posts", :action => "youtube" %></li>
-    <li><%= link_to 'Netflix', :controller => "posts", :action => "netflix" %></li>
-    <li><%= link_to 'AmazonPrime', :controller => "posts", :action => "amazonprime" %></li>
-    <li><%= link_to 'Hulu', :controller => "posts", :action => "hulu" %></li>
-    <li><%= link_to 'DAZN', :controller => "posts", :action => "dazn" %></li>
-    <li><%= link_to 'その他', :controller => "posts", :action => "other" %></li>
-    <% end %>
-		</ul>
+    <% if current_user %>
+    <%#= link_to 'ホーム', posts_path %>
+    <%#= link_to '新規投稿', new_post_path %>
+    <%#= link_to 'Users一覧', users_path %>
+    <%#= link_to 'TV', posts_tv_path %>
+    <%#= link_to 'YouTube', posts_youtube_path %>
+    <%#= link_to 'Netflix', posts_netflix_path %>
+    <%#= link_to 'AmazonPrime', posts_amzonprime_path %>
+    <%#= link_to 'Hulu', posts_hulu_path %>
+    <%#= link_to 'DAZN', posts_dazn_path %>
+    <%#= link_to 'その他', posts_other_path %>
+    <%# end %>
+		<%#/ul>
 		</div>
 	</div>
 </div>
 
+
+                <%#= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+                    <%#= text_area_tag :search,"", :placeholder => "タイトル名など入力" , class:"form-control mr-sm-2" %>
+                    <%#= submit_tag '検索する', class:"btn btn-outline-success my-2 my-sm-0" %>
+                    <%#end%>

@@ -2,56 +2,190 @@
 <br>
 <br>
 <br>
-<div class="posts-container">
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>5-9 星がキラキラ</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-9/css/reset.css">
+<link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-9/css/5-9.css">
+</head>
+<body>
+<div id="particles-js"></div>
+<div id="wrapper">
+  <p>コンテンツが入ります<br>※使用したライブラリ<a href="https://vincentgarreau.com/particles.js/" target="_blank">https://vincentgarreau.com/particles.js/</a></p>
+<!--/wrapper--></div>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-9/js/5-9.js"></script>
+</body>
+</html>
+<div class="netflix">
 <h1>Netflix</h1>
+                <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+                    <%= text_area_tag :search,"", :placeholder => "タイトル名など入力" %>
+                    <%= submit_tag '検索する' %>
+                <% end %>
+</div>
+<div class="posts-container">
     <% @netflixs.each do |t| %>
         <div class="post">
             <div class="main-box">
                 <div class="left-container">
-                    <%= t.title %>
-                    <p><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
+                    「<%= t.title %>」
+                    <div class="example">
+                        <p><%= image_tag t.image_url if t.image? %></p>
+                    </div>
                 </div>
                 <div class="right-container">
-
-                <p>投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
-            
-                <p>投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
-                <p>タイトル：<%= t.title %></p>
-                <p>視聴ツール：<%= t.genre %></p>
-                <p>視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
-                参加する
-
-
-            <% if user_signed_in? %>
-                <% if current_user.already_liked?(t) %>
-                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                    <p>・投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
+                    <p>・投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
+                    <%#<p>タイトル：<%= t.title %>
+                    <p>・視聴ツール：<%= t.genre %></p>
+                    <p>・視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
+                    <br>
+                    参加する
+                    <% if user_signed_in? %>
+                        <% if current_user.already_liked?(t) %>
+                            <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                                <i class="far fa-grin-squint"></i><%= t.likes.count %>
+                            <% end %>
+                        <% else %>
+                            <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                                <i class="far fa-grin-squint"></i><%= t.likes.count %>
+                            <% end %>
+                        <% end %>
+                    <% else %>
                         <i class="far fa-grin-squint"></i><%= t.likes.count %>
                     <% end %>
-                <% else %>
-                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
+                    <br>
+                    <p><%= link_to "詳細へ", post_path(t.id) %></p>
+                    <% if user_signed_in? && current_user.id == t.user_id %>  
+                        <%= link_to edit_post_path(t.id)  do %>
+                            <i class="fas fa-wrench"></i>
+                        <% end %>
+                        <br>
+                        <%= link_to post_path(t.id), method: :delete do %>
+                            <i class="fas fa-trash-alt"></i>
+                        <% end %>
                     <% end %>
-                <% end %>
-            <% else %>
-                <i class="far fa-grin-squint"></i><%= t.likes.count %>
-            <% end %>
-            <br>
-
-    <p><%= link_to "詳細へ", post_path(t.id) %></p>
-
-    <% if user_signed_in? && current_user.id == t.user_id %>  
-        <%= link_to edit_post_path(t.id)  do %>
-            <i class="fas fa-wrench"></i>
-        <% end %>
-        <br>
-        <%= link_to post_path(t.id), method: :delete do %>
-            <i class="fas fa-trash-alt"></i>
-        <% end %>
-    <% end %>
-
-
                 </div>
             </div>
         </div>
     <% end %>
 </div>
+
+<style>
+@charset "utf-8";
+
+/*========= レイアウトのためのCSS ===============*/
+
+#wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  color: #fff;
+}
+
+a{
+  color: #fff;
+}
+
+/*========= particle js を描画するエリア設定 ===============*/
+
+html,body{
+  height: 100%;/*高さを100%にして描画エリアをとる*/
+}
+
+#particles-js{ 
+  position:fixed;/*描画固定*/
+  z-index:-1;/*描画を一番下に*/
+  width: 100%;
+  height: 100%;
+  background-color:#020E34;/*背景色*/
+}
+
+#wrapper{
+  position: relative;/*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+  z-index: 1;/*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+  width:100%;
+  height: 100%;
+}
+</style>
+
+<script>
+particlesJS("particles-js", {
+  "particles":{
+    "number":{
+      "value":346,//この数値を変更すると星の数が増減できる
+      "density":{
+        "enable":true,
+        "value_area":800
+      }
+    },
+    "color":{
+      "value":"#ffffff"
+    },
+    "shape":{
+      "type":"circle",//形状はcircleを指定
+      "stroke":{
+        "width":0
+      },
+      },
+    "opacity":{
+      "value":1,//シェイプの透明度
+      "random":true,//シェイプの透明度をランダムにする
+      "anim":{
+        "enable":true,//シェイプの透明度をアニメーションさせる
+        "speed":3,//シェイプの透明度をアニメーションさせる
+        "opacity_min":0,//透明度の最小値０
+        "sync":false//全てを同時にアニメーションさせない
+      }
+    },
+    "size":{
+      "value":2,
+      "random":true,
+      "anim":{
+        "enable":false,
+        "speed":4,
+        "size_min":0.3,
+        "sync":false
+      }
+    },
+    "line_linked":{
+      "enable":false,
+    },
+    "move":{
+      "enable":true,
+      "speed":120,//この数値を小さくするとゆっくりな動きになる
+    "direction":"none",//方向指定なし
+    "random":true,//動きはランダムに
+    "straight":true,//動きをとどめる
+      "out_mode":"out",
+      "bounce":false,
+      "attract":{
+        "enable":false,
+        "rotateX":600,
+        "rotateY":600
+      }
+    }
+  },
+  "interactivity":{
+    "detect_on":"canvas",
+    "events":{
+      "onhover":{
+        "enable":false,
+      },
+      "onclick":{
+        "enable":false,
+      },
+      "resize":true
+    }
+  },
+  "retina_detect":true
+});
+</script>

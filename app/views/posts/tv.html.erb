@@ -56,3 +56,38 @@
         </div>
     <% end %>
 </div>
+
+   <div class="post-container">
+        <p class="title">新規視聴予定投稿</p>
+        <%= form_for @post do |f| %>
+            <div class="field">
+                <p><%= f.label :視聴タイトル %></p>
+                <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
+            </div>
+            <div class="field">
+                <p><%= f.label :視聴イメージ画像 %></p>
+                <p><%= f.label :image ,"file",class:"btn-box" %></p>
+                <p><%= f.file_field :image ,class:"image_form"%></p>
+            </div>
+            <div class="field">
+                <p><%= f.label :視聴ツール %></p>
+                <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "YouTube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
+            </div>
+            <div class="field">
+                <p><%= f.label :紹介・一言 %></p>
+                <p><%= f.text_field :body,:placeholder => "例：ホラー系です！一緒に絶叫しましょう！", :size => 140 ,class:"fa fa-edit fa-lg fa-fw" %></p>
+                <%#i class="fa fa-edit fa-lg fa-fw" aria-hidden="true"></i%>
+                <%#<i>はイタリック体にするやつ%>
+            </div>
+            <div class="field">
+                <p><%= f.label :zoomリンク %></p>
+                <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140,class:"fa fa-edit fa-lg fa-fw" %></p>
+            </div>
+            <div class="field">
+                <p><%= f.label :視聴予定時刻 %></p>
+                <p><%= f.datetime_field :time %></p>
+                <%#<p><%= f.datetime_field :time.strftime("%Y年 %m月 %d日, %H:%M") %>
+            </div>
+                <%= f.submit "投稿する" %>
+        <% end %>
+    </div>

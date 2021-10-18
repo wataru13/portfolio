@@ -1,3 +1,42 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.usershousai{
+    margin:0 auto;
+    text-align: center;
+    border-radius: 20px;
+    background: linear-gradient(#eff0d1, #ebc797 );
+    // background-image:url("toppage2.jpg") ;
+  }
+  .usershousai img{
+    margin:0 auto;
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:50%;
+  }
+  
+  .users-container{
+    margin:0 auto;
+    text-align: center;
+    border-radius: 10px;
+    border: solid black;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+  }
+  .users{
+    // text-align: center;
+    border-radius: 20px;
+    border: solid #0024ee;
+    // width: 30%;
+    // align-items: center;
+    // justify-content:center;
+    // margin-top: 10px;
+    // padding-top: 20px;
+    // margin-left: 10px;
+    // margin-right:10px;
+  }

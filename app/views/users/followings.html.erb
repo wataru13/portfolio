@@ -1,0 +1,8 @@
+    <br>
+    <br>
+    <br>
+    <P>フォロー</P>
+    <% @user.followings.each do |u| %>
+        <%= image_tag u.image_url, size: "50x50" if u.image? %>
+        <li><%= u.name %></li>
+    <% end %>

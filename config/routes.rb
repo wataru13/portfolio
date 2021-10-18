@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users, only: [:show, :index]
 
+  get 'users/:id/followings' => 'users#followings', as: 'followings'
+  get 'users/:id/followers' => 'users#followers',  as: 'followers'
+
   resources :messages, :only => [:create]
   resources :rooms, :only => [:create, :show, :index]
 
@@ -21,9 +24,17 @@ Rails.application.routes.draw do
   get 'posts/hulu' => 'posts#hulu'
   get 'posts/dazn' => 'posts#dazn'
   get 'posts/other' => 'posts#other'
+
+  get 'posts/hello' => 'posts#hello'
+
   resources :posts
 
-  root 'posts#index'
+
+  get 'hello/index' => 'hello#index'
+  root 'hello#index'
+
+  resources :relationships, only: [:create, :destroy]
+
 
   resources :posts do
     resources :likes, only: [:create, :destroy]

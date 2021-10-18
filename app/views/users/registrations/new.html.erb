@@ -1,37 +1,170 @@
-<br>
-<br>
-<br>
-<h2>Sign up</h2>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/css/reset.css">
+<link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/css/5-7.css">
+<%= stylesheet_link_tag 'toppage', :media => "all" %>
+</head>
+<body>
+<div id="particles-js"></div>
+<div id="wrapper">
+    <div class= "margin">
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        <div class="box11">
+          <br>
+          <br>
+          <h2>Sign up</h2>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "users/shared/error_messages", resource: resource %>
+            <div class="field">
+              <%= f.label :ユーザー名 %><br />
+              <%= f.text_field :name, autofocus: true %>
+            </div>
+            <div class="field">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            </div>
+            <div class="field">
+              <%= f.label :パスワード %>
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "new-password" %>
+            </div>
+            <div class="field">
+              <%= f.label :パスワード再入力 %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+            </div>
+            <div class="actions">
+              <%= f.submit "Sign up" %>
+            </div>
+          <% end %>
+          <%= render "users/shared/links" %>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<!--/wrapper--></div>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-7/js/5-7.js"></script>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+</body>
+</html>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+<style>
+@charset "utf-8";
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+/*========= レイアウトのためのCSS ===============*/
 
-<%= render "users/shared/links" %>
+#wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  color: #fff;
+}
+a{
+  color: #fff;
+}
+
+/*========= particle js を描画するエリア設定 ===============*/
+
+html,body{
+  height: 100%;/*高さを100%にして描画エリアをとる*/
+}
+
+#particles-js{ 
+  position:fixed;/*描画固定*/
+  z-index:-1;/*描画を一番下に*/
+  width: 100%;
+  height: 100%;
+  background-color:#000;/*背景色*/
+}
+
+#wrapper{
+  position: relative;/*描画を#particles-jsよりも上にするためposition:relative;を指定*/
+  z-index: 1;/*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+  width:100%;
+  height: 100%;
+}
+</style>
+
+<script>
+particlesJS("particles-js",{
+  "particles":{
+    "number":{
+      "value":50,//この数値を変更するとホタルの数が増減できる
+      "density":{
+        "enable":true,
+        "value_area":1602.3971861905397
+      }
+    },
+    "color":{
+      "value":"#f3fa8b"//色
+    },
+    "shape":{
+      "type":"circle",//形状はcircleを指定
+      "stroke":{
+        "width":0,
+      }
+    },
+    "opacity":{
+      "value":1,
+      "random":true,//透過をランダムに
+      "anim":{
+        "enable":false,
+        "speed":1.10115236356258881,
+        "opacity_min":0,
+        "sync":false
+      }
+    },
+    "size":{
+      "value":4.005992965476349,
+      "random":true,//サイズをランダムに
+      "anim":{
+        "enable":true,
+        "speed":24.345709068776642,
+        "size_min":0.1,
+        "sync":false
+      }
+    },
+    "line_linked":{
+      "enable":false,
+    },
+    "move":{
+      "enable":true,
+      "speed":6,//この数値を小さくするとゆっくりな動きになる
+      "direction":"none",//方向指定なし
+      "random":true,//動きはランダムに
+      "straight":false,//動きをとどめない
+      "out_mode":"out",//画面の外に出るように描写
+      "bounce":false,//跳ね返りなし
+      "attract":{
+        "enable":false,
+        "rotateX":600,
+        "rotateY":600
+      }
+    }
+  },
+  "interactivity":{
+    "detect_on":"canvas",
+    "events":{
+      "onhover":{
+        "enable":false
+      },
+      "onclick":{
+        "enable":false
+      },
+      "resize":true
+    }
+  },
+  "retina_detect":true
+});
+</script>

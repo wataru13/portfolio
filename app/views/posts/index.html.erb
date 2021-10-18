@@ -6,135 +6,203 @@
 <br>
 <br>
 <br>
-
 <%= stylesheet_link_tag 'index', :media => "all" %>
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+    <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/reset.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/css/6-1-6.css">
+    </head>
     <body>
         <section id="first-block">
             <div class="title-container">
                 <h1>リモートリアルタイム感情共有</h1>
-                <h3>~ 気持ちを繋げよう ~</h3>
+                <h3>~ 新たな繋がりを探そう ~</h3>
+                <%#人との繋がり・気持ちの繋がり%>
             </div>
         </section>
+        <%#カルーセル%>
+        <ul class="slider">
+            <%#<li><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/img/img_01.jpg" alt=""></li>%>
+            <li><%= link_to image_tag("/primevideo5.png"), posts_amzonprime_path %></li>
+            <li><%= link_to image_tag("/hulu5.jpg"), posts_hulu_path %></li>
+            <li><%= link_to image_tag("/netflix5.png"), posts_netflix_path %></li>
+            <li><%= link_to image_tag("/youtube5.png"), posts_youtube_path %></li>
+            <li><%= link_to image_tag("/dazn5.png"), posts_dazn_path %></li>
+            <li><%= link_to image_tag("/TV5.png"), posts_tv_path %></li>
+            <li><%= link_to image_tag("/others5.png"), posts_other_path %></li>
+            <!--/slider--></ul>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+            <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/js/6-1-6.js"></script>
     </body>
-    
-
-
-<div class="posts-container">
-
-<h3>投稿を検索</h3>
-    <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-        <%= text_area_tag :search ,:placeholder => "キーワードを入力" %>
-        <%= submit_tag '検索する' %>
-    <% end %>
-
-<%= page_entries_info @posts %>
-
-    <p><h3>投稿一覧</h3></p>
-    <% @posts.each do |t| %>
-        <div class="post">
-            <div class="main-box">
-                <div class="left-container">
-                    <%= t.title %>
-                    <p><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
-                </div>
-                <div class="right-container">
-                <p>投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
-                <p>投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
-                <p>タイトル：<%= t.title %></p>
-                <p>視聴ツール：<%= t.genre %></p>
-                <p>視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
-                参加する
-
-
-            <% if user_signed_in? %>
-                <% if current_user.already_liked?(t) %>
-                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                    <% end %>
-                <% else %>
-                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                        <i class="far fa-grin-squint"></i></i><%= t.likes.count %>
-                    <% end %>
-                <% end %>
-            <% else %>
-                <i class="far fa-grin-squint"></i><%= t.likes.count %>
-            <% end %>
+    <%= link_to "ホーム", posts_path, class: "btn btn-primary" %>
+            <div class="setumei">
+            <p><h2>TVや動画配信をリモートで誰かと一緒に見て、感情をリアルタイムで共有しよう!</h2></p>
+            <p>・視聴予定のモノを投稿して一緒の時間に見てくれる人を呼びかけよう！</p>
+            <p>・興味なるものを探して、参加しよう！</p>
+            <p>・リモートでも繋がりを感じてコロナに負けずに過ごそう！</p>
             <br>
-
-
-
-
-            <p><%= link_to "詳細へ", post_path(t.id) %></p>
-
-
-                <% if user_signed_in? && current_user.id == t.user_id %>  
-                    <%= link_to edit_post_path(t.id)  do %>
-                        <i class="fas fa-wrench"></i>
-                    <% end %>
-                    <br>
-                    <%= link_to post_path(t.id), method: :delete do %>
-                        <i class="fas fa-trash-alt"></i>
-                    <% end %>
+            <br>
+            </div>
+            <div class="kensaku">
+            <h3>投稿を検索</h3>
+                <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
+                    <%= text_area_tag :search,"", :placeholder => "タイトル名など入力" %>
+                    <%= submit_tag '検索する' %>
+                <p><h3>投稿一覧</h3></p>
+                <%= page_entries_info @posts %>
                 <% end %>
-
+            </div>
+            
+            <form action="/posts" accept-charset="UTF-8" method="get" >
+                <input type="text" name="search" id="search">
+                <button name ="button" type="submit" class="btn btn default">
+                <i class="fas fa-search fa-2x"></i>
+                </button>
+            </form>
+        <div class="posts-container">
+            <% @posts.each do |t| %>
+                <div class="post">
+                    <div class="main-box">
+                        <div class="left-container">
+                            「<%= t.title %>」
+                            <div class = "image">
+                                <p><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
+                            </div>
+                        </div>
+                        <div class="right-container">
+                            <p>・投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
+                            <p>・投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
+                            <%#<p>タイトル：<%= t.title %>
+                            <p>・視聴ツール：<%= t.genre %></p>
+                            <p>・視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
+                            <br>
+                            <%#参加%>
+                            参加する
+                            <% if user_signed_in? %>
+                                <% if current_user.already_liked?(t) %>
+                                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                                        <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                                    <% end %>
+                                <% else %>
+                                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                                        <i class="far fa-grin-squint fa-2x"></i></i><%= t.likes.count %>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                            <% end %>
+                            <br>
+                            <%#詳細%>
+                            <p><%= link_to "詳細へ", post_path(t.id), class:"btn btn-light" %></p>
+                            <%#編集、削除%>
+                                <% if user_signed_in? && current_user.id == t.user_id %>  
+                                    <%= link_to edit_post_path(t.id)  do %>
+                                        <i class="fas fa-wrench fa-2x"></i>
+                                    <% end %>
+                                    <br>
+                                    <%= link_to post_path(t.id), method: :delete do %>
+                                        <i class="fas fa-trash-alt fa-2x"></i>
+                                    <% end %>
+                                <% end %>
+                        </div>
+                    </div>
                 </div>
+            <% end %>
+        </div>
+        <%= paginate @posts %>
+        <%#= link_to 'TV', :controller => "posts", :action => "tv" %>
+        <%#= link_to 'YouTube', :controller => "posts", :action => "youtube" %>
+        <%#= link_to 'Netflix', :controller => "posts", :action => "netflix" %>
+        <%#= link_to 'AmazonPrime', :controller => "posts", :action => "amazonprime" %>
+        <%#= link_to 'Hulu', :controller => "posts", :action => "hulu" %>
+        <%#= link_to 'DAZN', :controller => "posts", :action => "dazn" %>
+        <%#= link_to 'その他', :controller => "posts", :action => "other" %>
+    <!-- Button trigger modal -->
+    <div class="iti" >
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            新規投稿
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">新規投稿</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= form_for @post do |f| %>
+                        <div class="field">
+                            <p><%= f.label :視聴タイトル %></p>
+                            <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
+                        </div>
+                        <div class="field">
+                            <p><%= f.label :視聴イメージ画像 %></p>
+                            <p><%= f.file_field :image %></p>
+                        </div>
+                        <div class="field">
+                            <p><%= f.label :視聴ツール %></p>
+                            <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "YouTube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
+                        </div>
+                        <div class="field">
+                            <p><%= f.label :紹介・一言 %></p>
+                            <p><%= f.text_field :body,:placeholder => "例：ホラー系です！一緒に絶叫しましょう！", :size => 140 %></p>
+                        </div>
+                        <div class="field">
+                            <p><%= f.label :zoomリンク %></p>
+                            <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140 %></p>
+                        </div>
+                        <div class="field">
+                            <p><%= f.label :視聴予定時刻 %></p>
+                            <p><%= f.datetime_field :time %></p>
+                            <%#<p><%= f.datetime_field :time.strftime("%Y年 %m月 %d日, %H:%M") %>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><%= f.submit "投稿する" %></button>
+                    
+                </div>
+                <% end %>
             </div>
         </div>
-    <% end %>
-
-        <%= paginate @posts %>
-        
-
-    <br>
-    <%= link_to 'TV', :controller => "posts", :action => "tv" %>
-    <%= link_to 'YouTube', :controller => "posts", :action => "youtube" %>
-    <%= link_to 'Netflix', :controller => "posts", :action => "netflix" %>
-    <%= link_to 'AmazonPrime', :controller => "posts", :action => "amazonprime" %>
-    <%= link_to 'Hulu', :controller => "posts", :action => "hulu" %>
-    <%= link_to 'DAZN', :controller => "posts", :action => "dazn" %>
-    <%= link_to 'その他', :controller => "posts", :action => "other" %>
-
-</div>
-
-
-<%= stylesheet_link_tag 'new', :media => "all" %>
-
-
-
-
-<div class="post-container">
-    <p class="title">新規視聴予定投稿</p>
-<br>
-
-<%= form_for @post do |f| %>
-    <div class="field">
-    <div class="field">
-        <p><%= f.label :視聴タイトル %></p>
-        <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
     </div>
-    <div class="field">
-        <p><%= f.label :視聴イメージ画像 %></p>
-        <p><%= f.file_field :image %></p>
-    </div>
-    <div class="field">
-        <p><%= f.label :視聴ツール %></p>
-        <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "YouTube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
-    </div>
-    <div class="field">
-        <p><%= f.label :紹介 %></p>
-        <p><%= f.text_field :body,:placeholder => "例：ホラー系です！一緒に絶叫しましょう！", :size => 140 %></p>
-    </div>
-    <div class="field">
-        <p><%= f.label :zoomリンク %></p>
-        <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140 %></p>
-    </div>
-    <div class="field">
-        <p><%= f.label :視聴予定時刻 %></p>
-        <p><%= f.datetime_field :time %></p>
-    </div>
-    
-    <%= f.submit "投稿する" %>
-<% end %>
+</html>
 
-
-
+<script>
+  $('.slider').slick({
+    autoplay: true,//自動的に動き出すか。初期値はfalse。
+    infinite: true,//スライドをループさせるかどうか。初期値はtrue。
+    slidesToShow: 3,//スライドを画面に3枚見せる
+    slidesToScroll: 3,//1回のスクロールで3枚の写真を移動して見せる
+    prevArrow: '<div class="slick-prev"></div>',//矢印部分PreviewのHTMLを変更
+    nextArrow: '<div class="slick-next"></div>',//矢印部分NextのHTMLを変更
+    dots: true,//下部ドットナビゲーションの表示
+    responsive: [
+      {
+      breakpoint: 769,//モニターの横幅が769px以下の見せ方
+      settings: {
+        slidesToShow: 2,//スライドを画面に2枚見せる
+        slidesToScroll: 2,//1回のスクロールで2枚の写真を移動して見せる
+      }
+    },
+    {
+      breakpoint: 426,//モニターの横幅が426px以下の見せ方
+      settings: {
+        slidesToShow: 1,//スライドを画面に1枚見せる
+        slidesToScroll: 1,//1回のスクロールで1枚の写真を移動して見せる
+      }
+    }
+  ]
+  });
+</script>
