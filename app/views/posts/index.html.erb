@@ -17,8 +17,16 @@
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/css/6-1-6.css">
+    <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-17/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-17/css/5-17.css">
     </head>
     <body>
+        <div class= "margin">
+        </div>
+        <div id="wrapper">
+            <canvas id="particle"></canvas>
+            <!--/wrapper-->
+        </div>
         <section id="first-block">
             <div class="title-container">
                 <h1>リモートリアルタイム感情共有</h1>
@@ -177,7 +185,61 @@
             </div>
         </div>
     </div>
+    <div class= "margin2">
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="  crossorigin="anonymous"></script>
+    <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-17/js/particleText.js"></script>
+    
+    <script>
+$("#particle").particleText({
+    text: "リモシェア<br>感情共有しよう", // 表示させたいテキスト。改行の場合は<br>追加
+    colors:["#ffff00","#ffa500", "#ffd700"],// パーティクルの色を複数指定可能
+    speed: "high",  // slow, middle, high の3つから粒子が集まる速さを選択
+  });
+</script>
+</body>
 </html>
+
+<style>
+@charset "utf-8";
+
+/*========= レイアウトのためのCSS ===============*/
+
+body{
+  background:#333;
+  word-wrap : break-word;
+}
+
+#main-area p{
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding:300px 0;
+}
+
+a{
+  color: #fff;
+}
+
+/*========= 粒子を描画するエリア設定 ===============*/
+
+#wrapper{
+/*描画されるテキストを中央寄せにする*/
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#particle{
+    width:100%;
+  height: 100vh;
+  vertical-align: bottom;/*canvasタグ下に余白が生まれるのを防ぐ*/
+}
+
+</style>
+
+
+
 
 <script>
   $('.slider').slick({

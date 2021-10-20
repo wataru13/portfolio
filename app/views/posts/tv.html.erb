@@ -1,7 +1,58 @@
 <%= stylesheet_link_tag 'index', :media => "all" %>
-<br>
-<br>
-<br>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+    <link href="https://assets.codepen.io/6329135/reset04.css" rel="stylesheet">
+</head>
+<body>
+    <div id="wrapper">
+        <canvas id="particle"></canvas>
+        <!--/wrapper-->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://assets.codepen.io/6329135/particleText.min.js"></script>
+    <script src="moji.js"></script>
+</body>
+<style>
+@charset "utf-8";
+
+/*========= レイアウトのためのCSS ===============*/
+
+body {
+  background-image: linear-gradient(
+    112.1deg,
+    rgba(30, 30, 30, 1) 11.4%,
+    rgba(63, 76, 119, 1) 70.2%
+  );
+  word-wrap: break-word;
+}
+
+/*========= 粒子を描画するエリア設定 ===============*/
+
+#wrapper {
+  /*描画されるテキストを中央寄せにする*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#particle {
+  width: 100%;
+  height: 100vh;
+  vertical-align: bottom; /*canvasタグ下に余白が生まれるのを防ぐ*/
+  font-size: clamp(12px, 4vw, 2rem);
+}
+</style>
+<script>
+    $("#particle").particleText({
+    text: "リモート<br><br>シェア", // 表示させたいテキスト。改行の場合は<br>追加
+    colors: ["#ffff00", "#ffff7a", "#ffff3d"], // パーティクルの色を複数指定可能
+    speed: "high" // slow, middle, high の3つから粒子が集まる速さを選択
+    });
+</script>
+
 
 <div class="posts-container">
 <h1>TV</h1>
@@ -21,8 +72,6 @@
                 <p>視聴ツール：<%= t.genre %></p>
                 <p>視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
                 参加する
-
-
             <% if user_signed_in? %>
                 <% if current_user.already_liked?(t) %>
                     <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
@@ -37,9 +86,7 @@
                 <i class="far fa-grin-squint"></i><%= t.likes.count %>
             <% end %>
             <br>
-
     <p><%= link_to "詳細へ", post_path(t.id) %></p>
-
     <% if user_signed_in? && current_user.id == t.user_id %>  
         <%= link_to edit_post_path(t.id)  do %>
             <i class="fas fa-wrench"></i>
@@ -50,13 +97,11 @@
         <% end %>
     <% end %>
     
-
                 </div>
             </div>
         </div>
     <% end %>
 </div>
-
    <div class="post-container">
         <p class="title">新規視聴予定投稿</p>
         <%= form_for @post do |f| %>

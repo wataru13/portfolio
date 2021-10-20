@@ -1,5 +1,6 @@
 <%= stylesheet_link_tag 'index', :media => "all" %>
-<br>
+<div class= "margin">
+</div>
 <div class="posts-container">
     <div class="post">
         <h1>投稿詳細</h1>
@@ -54,7 +55,6 @@
             <li><%= user.name %></li>
         <% end %>
     </div>
-
     <div class="comment-wrapper">
         <br>
         <h1>コメント一覧</h1>
@@ -65,7 +65,6 @@
                 <p>コメント：<%= c.content %></p>
                 </div>
         <% end %>
-
         <% if user_signed_in? %>
             <%= form_with(model: [@post, @comment], local: true) do |f| %>
                 <%= f.text_area :content %>
@@ -75,3 +74,5 @@
             <% end %>
         <% end %>
     </div>
+<div class= "margin2">
+</div>
