@@ -2,7 +2,7 @@ class PostsController < ApplicationController
     before_action :authenticate_user!
 
 
-    impressionist :actions => [:show], :unique => [:impressionable_id, :ip_address]
+    # impressionist :actions => [:show], :unique => [:impressionable_id, :ip_address]
     def index
         if params[:search] == nil
             @posts= Post.all
