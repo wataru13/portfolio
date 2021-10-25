@@ -2,3 +2,49 @@
 <li><%= link_to "ホーム", posts_path, class: "text1" %></li>
 
 <button type="button" class="btn btn-primary">Primary</button>
+
+
+<div class="container">
+    <div class="box18">
+    <h1>注目度TOP3</h1>
+    </div>
+    <div class="row">
+        <% @pv_ranking.each do |pv| %>
+            <div class = "col-sm-4 box55">
+                <div class="card box5" style="width: 22rem;">
+                    <a href="/posts/<%= pv.id %>"><%= image_tag pv.image_url, class:"card-img-top"  if pv.image? %></a>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= t.title %></h5>
+                        <p class="card-text">
+                        <%= image_tag pv.user.image_url, size: "50x50", class:"rounded-circle" if pv.user.image? %>
+                        <a href="/users/<%= pv.user.id %>"><%= pv.user.name %></a>
+                        </p>
+                        <% if user_signed_in? %>
+                            <% if current_user.already_liked?(pv) %>
+                                <%= link_to post_like_path(id: pv.id, post_id: pv.id), method: :delete do %>
+                                    <i class="far fa-grin-squint fa-2x"></i><%= pv.likes.count %>
+                                <% end %>
+                            <% else %>
+                                <%= link_to post_likes_path(id: pv.id, post_id: pv.id), method: :post do %>
+                                    <i class="far fa-grin-squint fa-2x"></i><%= pv.likes.count %>
+                                <% end %>
+                            <% end %>
+                        <% else %>
+                            <i class="far fa-grin-squint fa-2x"></i><%= pv.likes.count %>
+                        <% end %>
+                        &emsp; &emsp;
+                        <% if user_signed_in? && current_user.id == pv.user_id %>  
+                            <%= link_to edit_post_path(pv.id)  do %>
+                                <i class="fas fa-wrench fa-2x"></i>
+                            <% end %>
+                            &emsp; &emsp;
+                            <%= link_to post_path(pv.id), method: :delete do %>
+                                <i class="fas fa-trash-alt fa-2x"></i>
+                            <% end %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

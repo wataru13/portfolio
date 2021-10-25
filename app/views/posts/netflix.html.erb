@@ -1,9 +1,4 @@
 <%= stylesheet_link_tag 'index', :media => "all" %>
-<br>
-<br>
-<br>
-<br>
-<br>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,67 +11,66 @@
 </head>
 <body>
 <div id="particles-js"></div>
-<div id="wrapper">
-  <p>コンテンツが入ります<br>※使用したライブラリ<a href="https://vincentgarreau.com/particles.js/" target="_blank">https://vincentgarreau.com/particles.js/</a></p>
-<!--/wrapper--></div>
+        <div class= "margin">
+        </div>
+        <div class="container clip-box-a">
+            <div class="centers">
+                <h2>Netflix</h2>
+            </div>
+            <div class="row">
+                <% @netflixs.each do |t| %>
+                    <div class="col-md-4 l-wrapper_06">
+                    <div class="card_06">
+                        <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+                        <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+                        <div class="card-content_06">
+                        <p class="card-title_06">
+                            <%= t.title %>
+                        </p>
+                        <p class="card-text_06">
+                            <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                            &emsp;
+                            <%= link_to t.user.name, t.user %>
+                            </h4>
+                            <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
+                            <% if user_signed_in? %>
+                                <% if current_user.already_liked?(t) %>
+                                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                                        <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                                    <% end %>
+                                <% else %>
+                                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                                        <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                            <% end %>
+                            &emsp; &emsp;
+                            <% if user_signed_in? && current_user.id == t.user_id %>  
+                                <%= link_to edit_post_path(t.id)  do %>
+                                    <i class="fas fa-wrench fa-2x"></i>
+                                <% end %>
+                                &emsp; &emsp;
+                                <%= link_to post_path(t.id), method: :delete do %>
+                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                <% end %>
+                            <% end %>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <div class= "margin2">
+        </div>
+
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="http://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/move02/5-9/js/5-9.js"></script>
 </body>
 </html>
-<div class="netflix">
-<h1>Netflix</h1>
-                <%= form_tag({controller:"posts",action:"index"}, method: :get) do %>
-                    <%= text_area_tag :search,"", :placeholder => "タイトル名など入力" %>
-                    <%= submit_tag '検索する' %>
-                <% end %>
-</div>
-<div class="posts-container">
-    <% @netflixs.each do |t| %>
-        <div class="post">
-            <div class="main-box">
-                <div class="left-container">
-                    「<%= t.title %>」
-                    <div class="example">
-                        <p><%= image_tag t.image_url if t.image? %></p>
-                    </div>
-                </div>
-                <div class="right-container">
-                    <p>・投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
-                    <p>・投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
-                    <%#<p>タイトル：<%= t.title %>
-                    <p>・視聴ツール：<%= t.genre %></p>
-                    <p>・視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
-                    <br>
-                    参加する
-                    <% if user_signed_in? %>
-                        <% if current_user.already_liked?(t) %>
-                            <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                                <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                            <% end %>
-                        <% else %>
-                            <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                                <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                            <% end %>
-                        <% end %>
-                    <% else %>
-                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                    <% end %>
-                    <br>
-                    <p><%= link_to "詳細へ", post_path(t.id) %></p>
-                    <% if user_signed_in? && current_user.id == t.user_id %>  
-                        <%= link_to edit_post_path(t.id)  do %>
-                            <i class="fas fa-wrench"></i>
-                        <% end %>
-                        <br>
-                        <%= link_to post_path(t.id), method: :delete do %>
-                            <i class="fas fa-trash-alt"></i>
-                        <% end %>
-                    <% end %>
-                </div>
-            </div>
-        </div>
-    <% end %>
-</div>
+
 
 <style>
 @charset "utf-8";
@@ -91,9 +85,9 @@
   color: #fff;
 }
 
-a{
+/* a{
   color: #fff;
-}
+} */
 
 /*========= particle js を描画するエリア設定 ===============*/
 
@@ -109,12 +103,12 @@ html,body{
   background-color:#020E34;/*背景色*/
 }
 
-#wrapper{
+/* #wrapper{
   position: relative;/*描画を#particles-jsよりも上にするためposition:relative;を指定*/
-  z-index: 1;/*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
-  width:100%;
+  /* z-index: 1;/*z-indexの数字を大きくすることで描画を#particles-jsよりも上に*/
+  /* width:100%;
   height: 100%;
-}
+} */ 
 </style>
 
 <script>

@@ -1,78 +1,93 @@
 <%= stylesheet_link_tag 'index', :media => "all" %>
 <div class= "margin">
 </div>
-<div class="posts-container">
-    <div class="post">
+
+
+<div class="container clip-box-a">
+    <div class="centers">
         <h1>投稿詳細</h1>
-        <div class="main-box">
-            <div class="left-container">
-                <p>投稿者：<a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a></p>
-                <p>タイトル：<%= @post.title %></p>    
-                <p><%= image_tag @post.image_url,size: "250x200" if @post.image? %></p>
-            </div>
-            <div class="right-container">
-                <p>・投稿時刻：<%= @post.created_at.to_s(:datetime_jp) %></p>
-                <p>・視聴ツール：<%= @post.genre %></p>
-                <p>・一言：<%= @post.body %></p>
-                <p>・視聴予定時刻：<%= @post.time.strftime("%Y年 %m月 %d日 %H時 %M分") if @post.time? %></p>
-                <%#<p>zoomリンク：<%= @post.zoom %>
-                <br>
-                <br>
-                参加する
-                <% if user_signed_in? %>
-                    <% if current_user.already_liked?(@post) %>
-                        <%= link_to post_like_path(@post), method: :delete do %>
-                            <i class="far fa-grin-squint"></i><%= @post.likes.count %>
+    </div>
+    <div class="row">
+        <div class="col-md-4 l-wrapper_07">
+            <div class="card_06">
+            <p><%= image_tag @post.image_url, class:"card-img-top" if @post.image? %></p>
+            <div class="card-content_07">
+                <p class="card-title_07">
+                    <%= @post.title %>
+                </p>
+                <p class="card-text_07">
+                    <h4><%= image_tag @post.user.image_url, size: "80x80", class:"rounded-circle" if @post.user.image? %>
+                        &emsp;
+                        <%= link_to @post.user.name, @post.user %>
+                    </h4>
+                    <p><small><%= @post.created_at.to_s(:datetime_jp) %></small></p>
+                    <p><small>視聴ツール：</small><%= @post.genre %></p>
+                    <p><small>一言：</small><%= @post.body %></p>
+                    <p><small>視聴予定時刻：</small><%= @post.time.strftime("%Y年%m月%d日%H時%M分") if @post.time? %></p>
+                    <% if user_signed_in? %>
+                        <% if current_user.already_liked?(@post) %>
+                            <%= link_to post_like_path(@post), method: :delete do %>
+                                <i class="far fa-grin-squint fa-2x"></i><%= @post.likes.count %>
+                            <% end %>
+                        <% else %>
+                            <%= link_to post_likes_path(@post), method: :post do %>
+                                <i class="far fa-grin-squint fa-2x"></i><%= @post.likes.count %>
+                            <% end %>
                         <% end %>
                     <% else %>
-                        <%= link_to post_likes_path(@post), method: :post do %>
-                            <i class="far fa-grin-squint"></i><%= @post.likes.count %>
+                        <i class="far fa-grin-squint fa-2x"></i><%= @post.likes.count %>
+                    <% end %>
+                    &emsp;
+                    <% if user_signed_in? && current_user.id == @post.user_id %>  
+                        <%= link_to edit_post_path(@post.id)  do %>
+                            <i class="fas fa-wrench fa-2x"></i>
+                        <% end %>
+                        &emsp;
+                        <%= link_to post_path(@post.id), method: :delete do %>
+                            <i class="fas fa-trash-alt fa-2x"></i>
                         <% end %>
                     <% end %>
-                <% else %>
-                    <i class="far fa-grin-squint"></i><%= @post.likes.count %>
-                <% end %>
-                <br>
-                <p><%= link_to("zoomへ", @post.zoom )%></p>
-                <% if user_signed_in? && current_user.id == @post.user_id %>  
-                    <%= link_to edit_post_path(@post.id)  do %>
-                        <i class="fas fa-wrench"></i>
-                    <% end %>
-                    <br>
-                    <%= link_to post_path(@post.id), method: :delete do %>
-                        <i class="fas fa-trash-alt"></i>
-                    <% end %>
-                <% end %>
-                
+                </p>    
             </div>
+            </div>
+        </div>
+        <div class="col-md-4 ">
+            <div class="sanka Hochi-box-b">
+                <h3>参加ユーザー</h3>
+                <% @post.liked_users.each do |user| %>
+                    <h4><%= image_tag user.image_url, size: "80x80", class:"rounded-circle" if user.image? %>
+                    &emsp;
+                    <%= link_to user.name, user %>
+                    </h4>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-4 comment-wrapper Hochi-box-b">
+            <h3>コメント一覧</h3>
+            <% @comments.each do |c| %>
+                <div class="sample_box11">
+                    <div class="sample_box11_tape">
+                    </div>
+                    <div class="sample_box11_title">
+                        <p><small><%= c.created_at.to_s(:datetime_jp) %></small></p>
+                        <p><%= image_tag @post.user.image_url, size: "80x80", class:"rounded-circle" if @post.user.image? %>
+                            &emsp;
+                            <%= link_to c.user.name, c.user %>
+                        </p>    
+                        <p><%= c.content %></p>
+                    </div>
+                </div>
+            <% end %>
+            <% if user_signed_in? %>
+                <%= form_with(model: [@post, @comment], local: true) do |f| %>
+                    <%= f.text_area :content %>
+                    <%= button_tag type: "submit" do %>
+                        <i class="far fa-comments "></i>コメントする
+                    <% end %>
+                <% end %>
+            <% end %>
         </div>
     </div>
 </div>
-    <br>
-    <div class="sanka">
-        <h2>参加ユーザー</h2>
-        <% @post.liked_users.each do |user| %>
-            <li><%= user.name %></li>
-        <% end %>
-    </div>
-    <div class="comment-wrapper">
-        <br>
-        <h1>コメント一覧</h1>
-        <% @comments.each do |c| %>
-            <div>
-                <p><%= c.created_at.to_s(:datetime_jp) %></p>
-                <p>ユーザー：<%= c.user.name unless c.user.blank? %></p>
-                <p>コメント：<%= c.content %></p>
-                </div>
-        <% end %>
-        <% if user_signed_in? %>
-            <%= form_with(model: [@post, @comment], local: true) do |f| %>
-                <%= f.text_area :content %>
-                <%= button_tag type: "submit" do %>
-                    <i class="far fa-comments"></i> コメントする
-                <% end %>
-            <% end %>
-        <% end %>
-    </div>
 <div class= "margin2">
 </div>

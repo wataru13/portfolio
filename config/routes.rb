@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :messages, :only => [:create]
   resources :rooms, :only => [:create, :show, :index]
 
+
+  get 'pv_ranking', to: 'imageposts#pv_ranking'
+  
   # get 'posts' => 'posts#index'
   # get 'posts/new' => 'posts#new'
   # post 'posts' => 'posts#create'

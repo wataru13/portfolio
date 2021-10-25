@@ -33,9 +33,9 @@
     margin-top: 100px;
     a:visited { color:rgb(7, 7, 7); text-decoration:none }
   }
-  h3 {
-    margin-bottom: 30px;
-  }
+  // h3 {
+  //   margin-bottom: 30px;
+  // }
   .post {
     width: 48%;
     border: solid #0024ee;
@@ -46,6 +46,13 @@
     margin-left: 10px;
     margin-right:10px;
   }
+
+
+  a{
+    text-align: none;
+    color:black;
+  }
+
   // .post:hover{
   //   color: #f00;
   // }
@@ -92,25 +99,32 @@
 
 
 
-  .box1{
-    background-color: skyblue;
-    height: 15vh;
-}
-.box2{
-    background-color: lightpink;
-    height: 15vh;
-}
-.box3{
-    background-color: blue;
-    height: 7vh;
-}
-.box4{
-    background-color: red;
-    height: 8vh;
-}
+//   .box1{
+//     background-color: skyblue;
+//     height: 15vh;
+// }
+// .box2{
+//     background-color: lightpink;
+//     height: 15vh;
+// }
+// .box3{
+//     background-color: blue;
+//     height: 7vh;
+// }
+// .box4{
+//     background-color: red;
+//     height: 8vh;
+// }
 .box5{
-    background-color:rgb(246, 248, 219);
+    background-color:white;
+    box-shadow: 5px 5px 5px grey;
+    margin-bottom: 10px;
 }
+.box55{
+  margin-bottom: 15px;
+}
+
+
 .card{
     margin: 0 auto;
 }
@@ -138,6 +152,66 @@
 	object-fit:cover;
 	border-radius:20%;
 }
+
+
+//斜めのやつ付箋
+.sample_box11 {
+  width: 90%;/* 紙の横幅 100%にすると全幅表示に */
+  padding: 15px;
+  margin: 2em auto;
+  background: #f7f092;/* 紙の色 */
+  color: #000;/* 文字色 */
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.03);transform:rotate(2deg);
+  word-break: break-all;
+}
+.sample_box11 p {
+   margin: 0; 
+   padding: 0;
+   font-size: 0.9em;
+}
+.sample_box11_tape {
+   width: 50%;
+   height: 35px;
+   margin: -25px auto 0;
+   background: #989898;
+   transform: rotate(-3deg);
+   opacity: 0.1;
+}
+.sample_box11_title {
+   text-align: center;
+   font-size: 1.3em!important;
+   margin-top: 10px!important;
+}
+.sample_box11_subtitle {
+   text-align: center;
+   font-size: 0.7em!important;
+   margin-bottom: 1em!important;
+}
+
+/* メモ　ホチキス　Ｂ */
+.Hochi-box-b {
+  position: relative;
+  // margin: 2em auto;
+  margin-top: 15px;
+  padding: 35px 20px 15px;
+  width: 90%; /* ボックス幅 */
+  background: #fff; /* ボックス背景色 */
+  color: #555555; /* 文章色 */
+  border: 1px solid #ccc; /* 枠線 */
+  box-shadow: 1px 1px 2px #ccc; /* 影 */
+ }
+ .Hochi-box-b::before, 
+ .Hochi-box-b::after {
+  position: absolute;
+  content: '';
+  top: 15px;
+  width: 30px;
+  border: 1.5px solid #C0C0C0; /*ホチキス*/
+  border-radius: 20px;
+  box-shadow: 0 -1px 2px #555;
+ }
+ .Hochi-box-b::before { left: 80px;}
+ .Hochi-box-b::after { right: 80px;}
 
 
 // @charset "utf-8";
@@ -209,7 +283,7 @@
 }
 
 .slick-dots .slick-active button{
-    background:#333;/*ドットボタンの現在地表示の色*/
+    background:#ccc;/*ドットボタンの現在地表示の色*/
 }
 
 

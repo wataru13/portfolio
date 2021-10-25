@@ -1,138 +1,56 @@
 <%= stylesheet_link_tag 'index', :media => "all" %>
 
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
-    <link href="https://assets.codepen.io/6329135/reset04.css" rel="stylesheet">
-</head>
-<body>
-    <div id="wrapper">
-        <canvas id="particle"></canvas>
-        <!--/wrapper-->
-    </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://assets.codepen.io/6329135/particleText.min.js"></script>
-    <script src="moji.js"></script>
-</body>
-<style>
-@charset "utf-8";
-
-/*========= レイアウトのためのCSS ===============*/
-
-body {
-  background-image: linear-gradient(
-    112.1deg,
-    rgba(30, 30, 30, 1) 11.4%,
-    rgba(63, 76, 119, 1) 70.2%
-  );
-  word-wrap: break-word;
-}
-
-/*========= 粒子を描画するエリア設定 ===============*/
-
-#wrapper {
-  /*描画されるテキストを中央寄せにする*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-#particle {
-  width: 100%;
-  height: 100vh;
-  vertical-align: bottom; /*canvasタグ下に余白が生まれるのを防ぐ*/
-  font-size: clamp(12px, 4vw, 2rem);
-}
-</style>
-<script>
-    $("#particle").particleText({
-    text: "リモート<br><br>シェア", // 表示させたいテキスト。改行の場合は<br>追加
-    colors: ["#ffff00", "#ffff7a", "#ffff3d"], // パーティクルの色を複数指定可能
-    speed: "high" // slow, middle, high の3つから粒子が集まる速さを選択
-    });
-</script>
-
-
-<div class="posts-container">
-<h1>TV</h1>
-    <% @tvs.each do |t| %>
-        <div class="post">
-            <div class="main-box">
-                <div class="left-container">
-                    <%= t.title %>
-                    <p><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
-                </div>
-                <div class="right-container">
-
-                <p>投稿時刻：<%= t.created_at.to_s(:datetime_jp) %></p>
-            
-                <p>投稿者：<a href="/users/<%= t.user.id %>"><%= t.user.name %></a></p>
-                <p>タイトル：<%= t.title %></p>
-                <p>視聴ツール：<%= t.genre %></p>
-                <p>視聴予定時刻：<%= t.time.strftime("%Y年 %m月 %d日 %H時 %M分") if t.time? %></p>
-                参加する
-            <% if user_signed_in? %>
-                <% if current_user.already_liked?(t) %>
-                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                    <% end %>
-                <% else %>
-                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                        <i class="far fa-grin-squint"></i><%= t.likes.count %>
-                    <% end %>
+        <div class= "margin">
+        </div>
+        <div class="container clip-box-a">
+            <div class="centers">
+                <h2>TV</h2>
+            </div>
+            <div class="row">
+                <% @tvs.each do |t| %>
+                    <div class="col-md-4 l-wrapper_06">
+                    <div class="card_06">
+                        <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+                        <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+                        <div class="card-content_06">
+                        <p class="card-title_06">
+                            <%= t.title %>
+                        </p>
+                        <p class="card-text_06">
+                            <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                            &emsp;
+                            <%= link_to t.user.name, t.user %>
+                            </h4>
+                            <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
+                            <% if user_signed_in? %>
+                                <% if current_user.already_liked?(t) %>
+                                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                                        <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                                    <% end %>
+                                <% else %>
+                                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                                        <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                                    <% end %>
+                                <% end %>
+                            <% else %>
+                                <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                            <% end %>
+                            &emsp; &emsp;
+                            <% if user_signed_in? && current_user.id == t.user_id %>  
+                                <%= link_to edit_post_path(t.id)  do %>
+                                    <i class="fas fa-wrench fa-2x"></i>
+                                <% end %>
+                                &emsp; &emsp;
+                                <%= link_to post_path(t.id), method: :delete do %>
+                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                <% end %>
+                            <% end %>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
                 <% end %>
-            <% else %>
-                <i class="far fa-grin-squint"></i><%= t.likes.count %>
-            <% end %>
-            <br>
-    <p><%= link_to "詳細へ", post_path(t.id) %></p>
-    <% if user_signed_in? && current_user.id == t.user_id %>  
-        <%= link_to edit_post_path(t.id)  do %>
-            <i class="fas fa-wrench"></i>
-        <% end %>
-        <br>
-        <%= link_to post_path(t.id), method: :delete do %>
-            <i class="fas fa-trash-alt"></i>
-        <% end %>
-    <% end %>
-    
-                </div>
             </div>
         </div>
-    <% end %>
-</div>
-   <div class="post-container">
-        <p class="title">新規視聴予定投稿</p>
-        <%= form_for @post do |f| %>
-            <div class="field">
-                <p><%= f.label :視聴タイトル %></p>
-                <p><%= f.text_field :title, :placeholder => "例：ミッドサマー", :size => 140 %></p>
-            </div>
-            <div class="field">
-                <p><%= f.label :視聴イメージ画像 %></p>
-                <p><%= f.label :image ,"file",class:"btn-box" %></p>
-                <p><%= f.file_field :image ,class:"image_form"%></p>
-            </div>
-            <div class="field">
-                <p><%= f.label :視聴ツール %></p>
-                <p><%= f.select :genre, [["TV", "TV"], ["YouTube", "YouTube"], ["Netflix", "Netflix"], ["Amazom Prime", "Amazon Prime"], ["Hulu", "Hulu"], ["DAZN", "DAZN"], ["その他", "その他"]], include_blank: "選択して下さい" %></p>
-            </div>
-            <div class="field">
-                <p><%= f.label :紹介・一言 %></p>
-                <p><%= f.text_field :body,:placeholder => "例：ホラー系です！一緒に絶叫しましょう！", :size => 140 ,class:"fa fa-edit fa-lg fa-fw" %></p>
-                <%#i class="fa fa-edit fa-lg fa-fw" aria-hidden="true"></i%>
-                <%#<i>はイタリック体にするやつ%>
-            </div>
-            <div class="field">
-                <p><%= f.label :zoomリンク %></p>
-                <p><%= f.text_field :zoom,:placeholder => "例：https://us04web.zoom.us/j/9383241815?pwd=SkxRQ0Qvd1R3ME1kUzNqUGh6VXorZz09", :size => 140,class:"fa fa-edit fa-lg fa-fw" %></p>
-            </div>
-            <div class="field">
-                <p><%= f.label :視聴予定時刻 %></p>
-                <p><%= f.datetime_field :time %></p>
-                <%#<p><%= f.datetime_field :time.strftime("%Y年 %m月 %d日, %H:%M") %>
-            </div>
-                <%= f.submit "投稿する" %>
-        <% end %>
-    </div>
+        <div class= "margin2">
+        </div>

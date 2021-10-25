@@ -2,217 +2,245 @@
 <%= stylesheet_link_tag 'users', :media => "all" %>
   <div class= "margin">
   </div>
-  <%#プロフィール%>
-  <div class = "usershousai" >
-    <%#<h1>ユーザー詳細</h1>%>
-    <p><%= image_tag @user.image_url, size: "200x200", class:"rounded-circle" if @user.image? %></p>
-    <h3><%= @user.name %></h3>
-    <%#<p>メールアドレス : <%= @user.email %>
-    <p><%= @user.profile %></p>
-    <% if @user.following?(current_user) %>
-        <p>[followされています]</p>
-    <% end %>
-    <%#フォローボタン%>
-    <%= render partial: "relationships/follow", locals: { user: @user }%>
-    <%#編集、DM%>
-    <% if current_user.id == @user.id %>
-      <%= link_to edit_user_registration_path(@user.id)  do %>
-        <i class="fas fa-wrench"></i>
-      <% end %>
-    <% else %>
-      <% if @isRoom == true %>
-        <p><a href="/rooms/<%= @roomId %>">DM</a>
-      <% else %>
-        <%= form_for @room do |f| %>
-          <%= fields_for @entry do |e| %>
-            <%= e.hidden_field :user_id, :value=> @user.id %>
-          <% end %>
-          <%= f.submit "DM" %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <%#フォローフォロワー、Zoom%>
-    <% if current_user.following?(@user) && @user.following?(current_user) %>
-        [相互フォローしています]
-        <p><%= link_to("[zoomへ]", @user.zoomlink, target: :_blank, rel: "noopener noreferrer") %></p>
-    <% else %>
-      <% if current_user.id == @user.id %>
-      <% else %>
-        <p>[相互フォローしていないので、zoomリンクが表示されません]</p>
-      <% end %>
-    <% end %>
-    <%#モーダル%>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
-      <%= @user.followings.count %>followings
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">followings</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <% @user.followings.each do |u| %>
-              <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
-              <a href="/users/<%= u.id %>"><%= u.name %></a>
-              </p>
+
+  <div class="users-container container">
+    <div class="user5 clip-box-a">
+        <%#プロフィール%>
+          <%#<h1>ユーザー詳細</h1>%>
+          <h3><%= image_tag @user.image_url, size: "100x100", class:"rounded-circle" if @user.image? %>&emsp;
+          <%= @user.name %>&emsp;
+              <%#編集、DM%>
+          <% if current_user.id == @user.id %>
+            <%= link_to edit_user_registration_path(@user.id)  do %>
+              <i class="fas fa-wrench "></i>
             <% end %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <%#モーダル%>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
-      <%= @user.followers.count %>followers
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalScrollable1" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle1">followers</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <% @user.followers.each do |u| %>
-              <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
-              <a href="/users/<%= u.id %>"><%= u.name %></a>
-              </p>
-            <% end %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <%#フォローフォロワー%>
-    <%# if current_user.id == @user.id %>
-      <P>フォロー</P>
-      <% @user.followings.each do |u| %>
-        <li><%= u.name %></li>
-      <% end %>
-      <p>フォロワー</p>
-      <% @user.followers.each do |u| %>
-        <li><%= u.name %></li>
-      <% end %>
-    <%# end %>
-    <p><%= link_to "フォローへ", followings_path(@user.id) %></p>
-    <p><%= link_to "フォロワーへ", followers_path(@user.id) %></p>
-  </div>
-  <%#投稿一覧%>
-  <div class="netflix">
-      <h2>User投稿一覧</h2>
-  </div>
-  <div class="posts-container">
-    <div class="post">
-    <%#↑divの位置が悪い（下の方がいい）%>
-      <% @user.posts.each do |t| %>
-        <p>投稿日時：<%= t.created_at.to_s(:datetime_jp) %></p>
-        <p>タイトル：<%= t.title %></p>
-        <%= image_tag t.image_url, size: "250x200" if t.image? %>
-        <p><%= t.time.strftime("%Y年%m月%d日%H時%M分") if t.time? %></p>
-  <%#参加ボタン%>
-        参加する
-        <% if user_signed_in? %>
-          <% if current_user.already_liked?(t) %>
-              <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                  <i class="far fa-grin-squint"></i><%= t.likes.count %>
-              <% end %>
+            <br>
           <% else %>
-              <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                  <i class="far fa-grin-squint"></i><%= t.likes.count %>
+            <% if @isRoom == true %>
+              <a href="/rooms/<%= @roomId %>">
+              <i class="far fa-envelope "></i>
+              </a>
+            <% else %>
+              <%= form_for @room do |f| %>
+                <%= fields_for @entry do |e| %>
+                  <%= e.hidden_field :user_id, :value=> @user.id %>
+                <% end %>
+                <%= f.button :type => "submit", style: 'border-style: none;' do %>
+                  <i class="far fa-envelope "></i>
+                <% end %>
               <% end %>
+            <% end %>
           <% end %>
-        <% else %>
-          <i class="far fa-grin-squint"></i><%= t.likes.count %>
-        <% end %>
-        <br>
-        <%#詳細%>
-        <p><%= link_to "詳細へ", post_path(t.id) %></p>
-        <%#編集、削除%>
-        <% if user_signed_in? && current_user.id == t.user_id %>  
-          <%= link_to edit_post_path(t.id)  do %>
-            <i class="fas fa-wrench"></i>
+          </h3>
+          <%#<p>メールアドレス : <%= @user.email %>
+          <p><%= @user.profile %></p>
+          <% if @user.following?(current_user) %>
+              <small><p>[followされています]</p></small>
           <% end %>
-          <%= link_to post_path(t.id), method: :delete do %>
-            <i class="fas fa-trash-alt"></i>
+          <%#フォローフォロワー、Zoom%>
+          <% if current_user.following?(@user) && @user.following?(current_user) %>
+              <button type="button" class="btn btn-primary">
+                <%= link_to("[zoomへ]", @user.zoomlink, target: :_blank, rel: "noopener noreferrer") %>
+              </button>
+          <% else %>
+            <% if current_user.id == @user.id %>
+            <% else %>
+              <p>※相互followすると、zoomリンクが表示されます※</p>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
+          <%#マイページでのzoomリンク%>
+          <% if current_user.id == @user.id%>
+            <button type="button" class="btn btn-primary">
+              <div ckass="iro">
+              <%= link_to("[zoomへ]", @user.zoomlink, target: :_blank, rel: "noopener noreferrer") %>
+              </div>
+            </button>
+          <%  end %>
+          <%#フォローのモーダル%>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
+            <%= @user.followings.count %> &nbsp; followings
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                    <br>
+                <br>
+                <br>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalScrollableTitle">followings</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <% @user.followings.each do |u| %>
+                    <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
+                    <a href="/users/<%= u.id %>"><%= u.name %></a>
+                    </p>
+                  <% end %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%#フォロワーのモーダル%>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalScrollable">
+            <%= @user.followers.count %> &nbsp; followers
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalScrollable1" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                <br>
+                <br>
+                <br>
+                  <h5 class="modal-title" id="exampleModalScrollableTitle1">followers</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <% @user.followers.each do |u| %>
+                    <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
+                    <a href="/users/<%= u.id %>"><%= u.name %></a>
+                    </p>
+                  <% end %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%#フォローフォロワー%>
+          <%# if current_user.id == @user.id %>
+            <%# @user.followings.each do |u| %>
+              <%#= u.name %>
+            <%# end %>
+            <%# @user.followers.each do |u| %>
+              <%#= u.name %>
+            <%# end %>
+          <%# end %>
+          <%#= link_to "フォローへ", followings_path(@user.id) %>
+          <%#= link_to "フォロワーへ", followers_path(@user.id) %>
+          <%#フォローボタン%>
+          <%= render partial: "relationships/follow", locals: { user: @user }%>
+          <% if current_user.id == @user.id%>
+          <br>
+          <br>
+          <%end%>
     </div>
   </div>
-  <%#参加投稿%>
-  <div class = "sankaitiran">
-    <h2>ユーザーが参加した投稿一覧</h2>
-    <% @user.liked_posts.each do |t| %>
-      <%= t.created_at.to_s(:datetime_jp) %><br>
-      <%= t.user.name %><br>
-      <%= t.title %>
-      <br>
-      <%= image_tag t.image_url, size: "250x200" if t.image? %>
-      <p><%= t.time.strftime("%Y年%m月%d日%H時%M分") if t.time? %>視聴開始</p>
-      <p><%= link_to("zoomへ", t.user.zoomlink ) %></p>
-    <% end %>
-  </div>
-<br>
-<br>
-<br>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box18">
+        <h2>投稿一覧</h2>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
+      <div class="row">
+        <% @user.posts.each do |t| %>
+          <div class="col-md-6 l-wrapper_06">
+            <div class="card_06">
+              <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+              <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+              <div class="card-content_06">
+                <p class="card-title_06">
+                  <%= t.title %>
+                </p>
+                <p class="card-text_06">
+                  <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                    &emsp;
+                    <%= link_to t.user.name, t.user %>
+                  </h4>
+                  <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
+                  <% if user_signed_in? %>
+                      <% if current_user.already_liked?(t) %>
+                          <%= link_to post_like_path(t), method: :delete do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
+                      <% else %>
+                          <%= link_to post_likes_path(t), method: :post do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                  <% end %>
+                  &emsp; &emsp;
+                  <% if user_signed_in? && current_user.id == t.user_id %>  
+                      <%= link_to edit_post_path(t.id)  do %>
+                          <i class="fas fa-wrench fa-2x"></i>
+                      <% end %>
+                      &emsp; &emsp;
+                      <%= link_to post_path(t.id), method: :delete do %>
+                          <i class="fas fa-trash-alt fa-2x"></i>
+                      <% end %>
+                  <% end %>
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box18">
+        <h2>参加投稿一覧</h2>
+      </div>
+      <div class="margin3">
+      </div>
+      <% @user.liked_posts.each do |u| %>
+        <div class="l-wrapper_06">
+          <div class="card_06">
+            <a href="/posts/<%= u.id %>"><%= image_tag u.image_url, class:"card-img-top"  if u.image? %></a>
+            <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+            <div class="card-content_06">
+              <p class="card-title_06">
+                <%= u.title %>
+              </p>
+              <p class="card-text_06">
+                <h4><%= image_tag u.user.image_url, size: "80x80", class:"rounded-circle" if u.user.image? %>
+                  &emsp;
+                  <%= link_to u.user.name, u.user %>
+                </h4>
+                <p><small><%= u.created_at.to_s(:datetime_jp) %></small></p>
+                <% if user_signed_in? %>
+                    <% if current_user.already_liked?(u) %>
+                        <%= link_to post_like_path(u), method: :delete do %>
+                            <i class="far fa-grin-squint fa-2x"></i><%= u.likes.count %>
+                        <% end %>
+                    <% else %>
+                        <%= link_to post_likes_path(u), method: :post do %>
+                            <i class="far fa-grin-squint fa-2x"></i><%= u.likes.count %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <i class="far fa-grin-squint fa-2x"></i><%= u.likes.count %>
+                <% end %>
+                &emsp; &emsp;
+                <% if user_signed_in? && current_user.id == u.user_id %>  
+                    <%= link_to edit_post_path(u.id)  do %>
+                        <i class="fas fa-wrench fa-2x"></i>
+                    <% end %>
+                    &emsp; &emsp;
+                    <%= link_to post_path(u.id), method: :delete do %>
+                        <i class="fas fa-trash-alt fa-2x"></i>
+                    <% end %>
+                <% end %>
+              </p>
+            </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
-
-    <div class= "margin2">
-    </div>
-<script>
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this)
-    modal.find('.modal-title').text('New message to ' + recipient)
-    modal.find('.modal-body input').val(recipient)
-  })
-</script>
+<div class= "margin2">
+</div>

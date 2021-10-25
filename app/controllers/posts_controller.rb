@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!
 
+
+    impressionist :actions => [:show], :unique => [:impressionable_id, :ip_address]
     def index
         if params[:search] == nil
             @posts= Post.all
@@ -13,6 +15,9 @@ class PostsController < ApplicationController
         @posts = @posts.order(created_at: :desc).page(params[:page]).per(6)
 
         @post = Post.new
+        # @posts_latest3 = @posts.first(3)
+        @post3s = Post.limit(3).order(:created_time)
+        # @pv_ranking = Post.find(Impression.group(:impressionable_id).order('count(impressionable_id) desc').limit(3).pluck(:impressionable_id))
     end
 
     def new
@@ -34,8 +39,17 @@ class PostsController < ApplicationController
 
         @comments = @post.comments
         @comment = Comment.new
+
+        # @post = Post.find_by(id: params[:id])
+        # @views = @post.impressions.size #PV数を取得
+        # impressionist(@post, nil, unique: [:session_hash])
+        # @pv_ranking = Post.find(Impression.group(:impressionable_id).order('count(impressionable_id) desc').limit(3).pluck(:impressionable_id))
     end
     
+    def pv_ranking
+        # @pv_ranking = Post.find(Impression.group(:impressionable_id).order('count(impressionable_id) desc').limit(3).pluck(:impressionable_id))
+    end
+
     def edit
         @post = Post.find(params[:id])
     end
@@ -79,6 +93,7 @@ class PostsController < ApplicationController
     end
     def other
         @others = Post.where(genre: "その他").order(created_at: :desc)
+        #@pv_ranking = Post.find(Impression.group(:impressionable_id).order('count(impressionable_id) desc').limit(3).pluck(:impressionable_id))
     end
 
     private

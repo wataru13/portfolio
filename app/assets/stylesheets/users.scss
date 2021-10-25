@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+
+
+
 .usershousai{
     margin:0 auto;
     text-align: center;
@@ -9,19 +12,20 @@
     background: linear-gradient(#eff0d1, #ebc797 );
     // background-image:url("toppage2.jpg") ;
   }
-  .usershousai img{
-    margin:0 auto;
-    width:100px;
-    height:100px;
-    object-fit:cover;
-    border-radius:50%;
-  }
+
   
-  .users-container{
+  .user5{
     margin:0 auto;
     text-align: center;
+    width: 80%;
+    // background: #f7f092;/* 紙の色 */
+    margin-bottom: 10px;
+  }
+  .users-container{
+    margin:0 auto;
+    // text-align: center;
     border-radius: 10px;
-    border: solid black;
+    // border: solid black;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -30,8 +34,8 @@
   }
   .users{
     // text-align: center;
-    border-radius: 20px;
-    border: solid #0024ee;
+    border-top: solid 5px #5d627b;
+    width: 80%;
     // width: 30%;
     // align-items: center;
     // justify-content:center;
@@ -39,4 +43,222 @@
     // padding-top: 20px;
     // margin-left: 10px;
     // margin-right:10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+    margin-bottom: 10px;
   }
+.main-box{
+  width: 80%;
+}
+.user-left{
+  margin-top: 30px;
+  padding-right: 70px;
+  padding-left: 20px;
+}
+.user-right {
+  // width: 90%;
+  margin-top: 30px;
+  display: table-cell;
+  vertical-align: middle;
+  // text-align: left;
+  // display: table-cell;
+  // vertical-align: middle;
+}
+
+
+
+  .search_container{
+    border: 1px solid rgb(153, 153, 153);
+    float:right;
+    display:flex;
+    width:342px;
+    border-radius: 20px;
+    margin-right: 5px;
+  }
+  .search＿container input[type="text"]{
+  border: none;
+  height: 2.0em;
+  }
+a.button{     
+    font-size:0.75em;
+  display:block;    
+  width:100px;    
+  margin:0 auto;  
+  padding-top:10px;   
+  padding-bottom:10px;   
+  text-align:center;   
+  border:2px solid;   
+  border-color:#aaaaaa #aaaaaa #aaaaaa #aaaaaa;  
+  background:#f1d0dd; 
+}       
+a.button:hover{  
+  background:#f8d0e7;  
+}     
+button.sbutton{      
+  color:white;    
+  background-color: rgb(56, 189, 241);  
+  border-radius: 30px;     
+  text-align:center;     
+  display:　table-cell;  
+  vertical-align: middle; 
+  text-decoration: none;  
+  justify-content: center;   
+  align-items: center;   
+  display: flex;    
+  padding-left: 12px;   
+  padding-right: 0px;  
+}    
+i.fas.far-search{   
+  display:　table-cell;  
+  vertical-align: middle;  
+}    
+.fa-search {
+      display:　table-cell;
+      vertical-align: middle;
+      text-decoration: none;
+      justify-content: center;
+      align-items: center;
+}
+
+
+
+/*--------------------------------------
+  カード型_06
+--------------------------------------*/
+.l-wrapper_06 {
+  margin: 1rem auto;
+  width: 100%;
+}
+
+.l-wrapper_06:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 7px 34px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+  transition: all .5s;
+}
+.card_06 {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+.card-img_06 {
+  border-radius: 5px 5px 0 0;
+  max-width: 100%;
+  height: auto;
+}
+.card-content_06 {
+  padding: 8px 20px 20px;
+}
+.card-title_06 {
+  font-size: 1.6em;
+  color: #333;
+  font-weight: 700;
+}
+.card-text_06 {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 0.2em;
+}
+.card-link_06 {
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding: 20px;
+}
+.card-link_06 a {
+  text-decoration: none;
+  color: #4f96f6;
+  margin: 0 10px;
+}
+.card-link_06 a:hover {
+  color: #6bb6ff;
+}
+
+.card-content_06 p {
+  margin-bottom:0;
+}
+
+
+
+// クリップ
+.clip-box-a {
+  position: relative;
+  margin: 2em auto;
+  padding: 15px 35px 15px 25px;
+  background-color: #fff; /* ボックス背景色 */
+  color: #555555; /* 文章色 */
+  border: 1px solid #ccc; /* 枠線 */
+  box-shadow: 1px 1px 1px #acacac; /* 影の色 */
+ }
+ .clip-box-a::before {
+  position: absolute;
+  content: '';
+  top: -15px;
+  right: 10px;
+  height: 55px;
+  width: 15px;
+  border: 3px solid #555555; /*クリップ色 */
+  background-color: none;
+  border-radius: 12px;
+  box-shadow: 1px 1px 2px #999;
+  transform: rotate(10deg);
+  z-index: 1;
+ }
+ .clip-box-a::after {
+  position: absolute;
+  content: '';
+  top: 0px;
+  width: 10px; 
+  right: 20px;
+  border: solid 5px #fff; /*背景色と同じ色にする*/
+  z-index: 2;
+ }
+
+
+
+ .l-wrapper_07 {
+  margin: 1rem auto;
+  width: 100%;
+}
+
+.card_07 {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+.card-img_07 {
+  border-radius: 5px 5px 0 0;
+  max-width: 100%;
+  height: auto;
+}
+.card-content_07 {
+  padding: 8px 20px 20px;
+}
+.card-title_07 {
+  font-size: 1.6em;
+  color: #333;
+  font-weight: 700;
+}
+.card-text_07 {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 0.2em;
+}
+.card-link_07 {
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding: 20px;
+}
+.card-link_07 a {
+  text-decoration: none;
+  color: #4f96f6;
+  margin: 0 10px;
+}
+.card-link_07 a:hover {
+  color: #6bb6ff;
+}
+
+.card-content_07 p {
+  margin-bottom:0;
+}

@@ -1,3 +1,84 @@
 // Place all the styles related to the rooms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.center{
+    align-content:center;
+    margin: 0 auto;
+    width: 50%;
+}
+
+
+.message {
+    max-width: 800px;
+    width: auto;
+    height: 600px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    z-index: 1;
+    font-family: 游ゴシック, YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+    overflow: scroll;
+}
+.right-message-name {
+    height: auto;
+    max-width: 120px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+    position: relative;
+    right: 20px;
+    margin-left: auto;
+    font-size: 80%;
+    padding: 2px;
+}
+
+.right-message {
+    width: auto;
+    max-width: 150px;
+    height: auto;
+    position: relative;
+    right: 10px;
+    margin-left: auto;
+    padding: 10px;
+    border-radius: 12px;
+    background: #feb729;
+    color: black;
+    overflow-wrap: break-all;
+    word-wrap: break-word;
+    text-align: left;
+}
+.left-message-name {
+    height: auto;
+    max-width: 120px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+    position: relative;
+    left: 20px;
+    margin-right: auto;
+    font-size: 80%;
+    padding: 2px;
+}
+.left-message {
+    width: auto;
+    max-width: 150px;
+    height: auto;
+    position: relative;
+    left: 10px;
+    margin-right: auto;
+    padding: 10px;
+    border-radius: 12px;
+    background: #a8b1b8;
+    color: black;
+    overflow-wrap: break-all;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.centers{
+    align-content:center;
+    margin: 0 auto;
+    width: 40%;
+    text-align: center;
+}
