@@ -119,7 +119,9 @@ a {
     font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "メイリオ",
       Meiryo, "ＭＳ Ｐゴシック", sans-serif;
       /* フォントの変更 */
-
+    // background-color: #FFFFCC	;
+    background-color: #000033	;
+    // background-color: #343a40;
     /* background-color: #f1f09a; */
     /* background: linear-gradient(to bottom, #a6d900 0%, #ff4454 100%);
     animation: huerotator 3s infinite alternate; */
@@ -212,6 +214,16 @@ a {
 .margin3{
   height: 1px;
 }
+.margin5{
+  height: 55px;
+}
+.margin6{
+  padding-right: 3px;
+}
+
+// .yellow{
+//   background-color: #FFFFCC	;
+// }
 
 .haba{
   width: 30%;

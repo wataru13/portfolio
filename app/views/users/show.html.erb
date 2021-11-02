@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-body">
                   <% @user.followings.each do |u| %>
-                    <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
+                    <p><%= image_tag u.image_url, size: "75x75", class:"rounded-circle" if u.image? %>
                     <a href="/users/<%= u.id %>"><%= u.name %></a>
                     </p>
                   <% end %>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="modal-body">
                   <% @user.followers.each do |u| %>
-                    <p><%= image_tag u.image_url, size: "10x10", class:"rounded-circle" if u.image? %>
+                    <p><%= image_tag u.image_url, size: "75x75", class:"rounded-circle" if u.image? %>
                     <a href="/users/<%= u.id %>"><%= u.name %></a>
                     </p>
                   <% end %>
@@ -140,8 +140,8 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
-      <div class="box18">
+    <div class="col-md-8 Hochi-box-b">
+      <div class="centers">
         <h2>投稿一覧</h2>
       </div>
       <div class="row">
@@ -190,9 +190,9 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="box18">
-        <h2>参加投稿一覧</h2>
+    <div class="col-md-4 Hochi-box-b">
+      <div class="centers">
+        <h2>参加一覧</h2>
       </div>
       <div class="margin3">
       </div>

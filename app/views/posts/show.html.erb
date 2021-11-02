@@ -70,7 +70,7 @@
                     </div>
                     <div class="sample_box11_title">
                         <p><small><%= c.created_at.to_s(:datetime_jp) %></small></p>
-                        <p><%= image_tag @post.user.image_url, size: "80x80", class:"rounded-circle" if @post.user.image? %>
+                        <p><%= image_tag c.user.image_url, size: "50x50", class:"rounded-circle" if c.user.image? %>
                             &emsp;
                             <%= link_to c.user.name, c.user %>
                         </p>    
