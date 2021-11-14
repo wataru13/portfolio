@@ -27,9 +27,10 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               &emsp; &emsp; 
-              <li><a class="create-button" href="/posts/new">
-                <i class="fas fa-pen fa-2x"></i>
-                <%#Create%>
+              <li>
+                <%= link_to new_post_path do %>
+                  <i class="fas fa-pen fa-2x"></i>
+                <% end %>
               </li>
               &emsp; &emsp; 
               <li>
