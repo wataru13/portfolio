@@ -19,8 +19,11 @@
                 <% @amazonprimes.each do |t| %>
                     <div class="col-md-4 l-wrapper_06">
                     <div class="card_06">
-                        <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
-                        <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+                        <% if t.image.present?%>
+                            <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+                        <% else %>
+                            <a href="/posts/<%= t.id %>"><img src="noimg.jpg" alt="" class="card-img-top" ></a>
+                        <% end %>
                         <div class="card-content_06">
                         <p class="card-title_06">
                             <%= t.title %>

@@ -7,8 +7,14 @@
     <div class="user5 clip-box-a">
         <%#プロフィール%>
           <%#<h1>ユーザー詳細</h1>%>
-          <h3><%= image_tag @user.image_url, size: "100x100", class:"rounded-circle" if @user.image? %>&emsp;
-          <%= @user.name %>&emsp;
+          <h3>
+            <% if @user.image.present? %>
+              <%= image_tag @user.image_url, size: "100x100", class:"rounded-circle" if @user.image? %>
+            <%else%>
+              <img src="0images.png" alt="" class="rounded-circle u80" >
+            <%end%>
+            &emsp;
+            <%= @user.name %>&emsp;
               <%#編集、DM%>
           <% if current_user.id == @user.id %>
             <%= link_to edit_user_registration_path(@user.id)  do %>

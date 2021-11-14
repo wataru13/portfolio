@@ -16,7 +16,11 @@
   <% @users.each do |user| %>
     <div class="users row  Hochi-box-b">
         <div class="col-xs-2 user-left">
-          <p><%= image_tag user.image_url, size: "150x150", class:"rounded-circle" if user.image? %>
+        <% if user.image.present? %>
+        <p><%= image_tag user.image_url, size: "150x150", class:"rounded-circle" if user.image? %>
+        <%else%>
+        <img src="0images.png" alt="" class="rounded-circle u150" >
+        <%end%>
         </div>
             <%#= link_to "フォロー", followings_path(user.id) %>
             <%#= link_to "フォロワー", followers_path(user.id) %>

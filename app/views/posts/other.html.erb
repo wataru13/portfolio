@@ -10,16 +10,24 @@
                 <% @others.each do |t| %>
                     <div class="col-md-4 l-wrapper_06">
                     <div class="card_06">
-                        <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
-                        <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+                        <% if t.image.present? %>
+                            <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+                        <% else %>
+                            <a href="/posts/<%= t.id %>"><img src="noimg.jpg" alt="" class="card-img-top"></a>
+                        <% end %>
                         <div class="card-content_06">
                         <p class="card-title_06">
                             <%= t.title %>
                         </p>
                         <p class="card-text_06">
-                            <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
-                            &emsp;
-                            <%= link_to t.user.name, t.user %>
+                            <h4>
+                                <% if t.user.image.present?%>
+                                    <%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                                <% else %>
+                                    <img src="0images.png" alt="" class="rounded-circle u80" >
+                                <% end %>
+                                &emsp;
+                                <%= link_to t.user.name, t.user %>
                             </h4>
                             <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
                             <% if user_signed_in? %>

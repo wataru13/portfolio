@@ -6,169 +6,163 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
     <link rel="stylesheet" type="text/css" href="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-
-
-
     
     <%# <link href="https://assets.codepen.io/6329135/reset04.css" rel="stylesheet"> %>
-    </head>
-    <body>
-      <div id="mainVisual">
-          <img src="012345.jpg" alt="" class="mobileHidden">
-          <img src="012345.jpg" alt="" class="desktopHidden">
+  </head>
+  <body>
+    <div id="mainVisual">
+        <img src="012345.jpg" alt="" class="mobileHidden">
+        <img src="012345.jpg" alt="" class="desktopHidden">
+    </div>
+    <div class="container clip-box-a">
+      <div class="centers">
+        <h2>ツール別投稿</h2>
       </div>
-      <div class="container clip-box-a">
-        <div class="centers">
-          <h2>ツール別投稿</h2>
-        </div>
-        <%#カルーセル%>
-        <ul class="slider">
-          <%#<li><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/img/img_01.jpg" alt=""></li>%>
-          <li><%= link_to image_tag("/primevideo5.png"), posts_amzonprime_path %></li>
-          <li><%= link_to image_tag("/hulu5.jpg"), posts_hulu_path %></li>
-          <li><%= link_to image_tag("/netflix5.png"), posts_netflix_path %></li>
-          <li><%= link_to image_tag("/youtube3.jpg"), posts_youtube_path %></li>
-          <li><%= link_to image_tag("/dazn5.png"), posts_dazn_path %></li>
-          <li><%= link_to image_tag("/TV5.png"), posts_tv_path %></li>
-          <li><%= link_to image_tag("/others5.png"), posts_other_path %></li>
-          <!--/slider-->
-        </ul>
+      <%#カルーセル%>
+      <ul class="slider">
+        <%#<li><img src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/img/img_01.jpg" alt=""></li>%>
+        <li><%= link_to image_tag("/primevideo5.png"), posts_amzonprime_path %></li>
+        <li><%= link_to image_tag("/hulu5.jpg"), posts_hulu_path %></li>
+        <li><%= link_to image_tag("/netflix5.png"), posts_netflix_path %></li>
+        <li><%= link_to image_tag("/youtube3.jpg"), posts_youtube_path %></li>
+        <li><%= link_to image_tag("/dazn5.png"), posts_dazn_path %></li>
+        <li><%= link_to image_tag("/TV5.png"), posts_tv_path %></li>
+        <li><%= link_to image_tag("/others5.png"), posts_other_path %></li>
+        <!--/slider-->
+      </ul>
+    </div>
+    <div class="container clip-box-a">
+      <div class="centers">
+        <h2>注目投稿TOP3</h2>
       </div>
-            <%#<div class="setumei">
-            <p><h2>TVや動画配信をリモートで誰かと一緒に見て、感情をリアルタイムで共有しよう!</h2></p>
-            <p>・視聴予定のモノを投稿して一緒の時間に見てくれる人を呼びかけよう！</p>
-            <p>・興味なるものを探して、参加しよう！</p>
-            <p>・リモートでも繋がりを感じてコロナに負けずに過ごそう！</p>
-            <br>
-            <br>
-            </div>%>
-<div class="container clip-box-a">
-  <div class="centers">
-    <h2>注目投稿TOP3</h2>
-  </div>
-  <div class="row">
-    <% @post3s.each do |t| %>
-      <div class="col-md-4 l-wrapper_06">
-        <div class="card_06">
-          <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
-          <%#= image_tag t.image_url,size: "350x250" if t.image? %>
-          <div class="card-content_06">
-            <p class="card-title_06">
-              <%= t.title %>
-            </p>
-            <p class="card-text_06">
-              <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
-                &emsp;
-                <%= link_to t.user.name, t.user %>
-              </h4>
-              <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
-              <% if user_signed_in? %>
-                  <% if current_user.already_liked?(t) %>
-                      <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                          <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+      <div class="row">
+        <% @rank_posts.each do |t| %>
+          <div class="col-md-4 l-wrapper_06">
+            <div class="card_06">
+              <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+              <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+              <div class="card-content_06">
+                <p class="card-title_06">
+                  <%= t.title %>
+                </p>
+                <p class="card-text_06">
+                  <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                    &emsp;
+                    <%= link_to t.user.name, t.user %>
+                  </h4>
+                  <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
+                  <% if user_signed_in? %>
+                      <% if current_user.already_liked?(t) %>
+                          <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
+                      <% else %>
+                          <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
                       <% end %>
                   <% else %>
-                      <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                          <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
-                      <% end %>
-                  <% end %>
-              <% else %>
-                  <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
-              <% end %>
-              &emsp; &emsp;
-              <% if user_signed_in? && current_user.id == t.user_id %>  
-                  <%= link_to edit_post_path(t.id)  do %>
-                      <i class="fas fa-wrench fa-2x"></i>
+                      <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
                   <% end %>
                   &emsp; &emsp;
-                  <%= link_to post_path(t.id), method: :delete do %>
-                      <i class="fas fa-trash-alt fa-2x"></i>
+                  <% if user_signed_in? && current_user.id == t.user_id %>  
+                      <%= link_to edit_post_path(t.id)  do %>
+                          <i class="fas fa-wrench fa-2x"></i>
+                      <% end %>
+                      &emsp; &emsp;
+                      <%= link_to post_path(t.id), method: :delete do %>
+                          <i class="fas fa-trash-alt fa-2x"></i>
+                      <% end %>
                   <% end %>
-              <% end %>
-            </p>
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="container clip-box-a ">
-  <div class="centers">
-    <h2>投稿一覧</h2>
-    <form action="/posts" accept-charset="UTF-8" method="get" >
-      <input type="text" name="search" id="search" placeholder="検索（タイトル名などを入力）" class="fa fa-edit fa-lg fa-fw">
-      <button name ="button" type="submit" class="btn btn default">
-        <i class="fas fa-search fa-2x"></i>
-      </button>
-    </form>
-      <%= page_entries_info @posts %>
-  </div>
-  <div class="row">
-    <% @posts.each do |t| %>
-      <div class="col-md-4 l-wrapper_06">
-        <div class="card_06">
-          <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
-          <%#= image_tag t.image_url,size: "350x250" if t.image? %>
-          <div class="card-content_06">
-            <p class="card-title_06">
-              <%= t.title %>
-            </p>
-            <p class="card-text_06">
-              <h4><%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
-                &emsp;
-                <%= link_to t.user.name, t.user %>
-              </h4>
-              <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
-              <% if user_signed_in? %>
-                  <% if current_user.already_liked?(t) %>
-                      <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
-                          <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+    </div>
+    <div class="container clip-box-a ">
+      <div class="centers">
+        <h2>投稿一覧</h2>
+        <form action="/posts" accept-charset="UTF-8" method="get" >
+          <input type="text" name="search" id="search" placeholder="検索（タイトル名を入力）" class="fa fa-edit fa-lg fa-fw">
+          <button name ="button" type="submit" class="btn btn default">
+            <i class="fas fa-search fa-2x"></i>
+          </button>
+        </form>
+          <%= page_entries_info @posts %>
+      </div>
+      <div class="row">
+        <% @posts.each do |t| %>
+          <div class="col-md-4 l-wrapper_06">
+            <div class="card_06">
+              <% if t.image.present?%>
+                <a href="/posts/<%= t.id %>"><%= image_tag t.image_url, class:"card-img-top"  if t.image? %></a>
+                <%#= image_tag t.image_url,size: "350x250" if t.image? %>
+              <% else %>
+                <a href="/posts/<%= t.id %>"><img src="noimg.jpg" alt="" class="card-img-top" ></a>
+              <% end %>
+              <div class="card-content_06">
+                <p class="card-title_06">
+                  <%= t.title %>
+                </p>
+                <p class="card-text_06">
+                  <h4>
+                    <% if t.user.image.present?%>
+                      <%= image_tag t.user.image_url, size: "80x80", class:"rounded-circle" if t.user.image? %>
+                    <% else %>
+                      <img src="0images.png" alt="" class="rounded-circle u80" >
+                    <% end %>
+                    &emsp;
+                    <%= link_to t.user.name, t.user %>
+                  </h4>
+                  <p><small><%= t.created_at.to_s(:datetime_jp) %></small></p>
+                  <% if user_signed_in? %>
+                      <% if current_user.already_liked?(t) %>
+                          <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
+                      <% else %>
+                          <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                              <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
+                          <% end %>
                       <% end %>
                   <% else %>
-                      <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
-                          <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
-                      <% end %>
-                  <% end %>
-              <% else %>
-                  <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
-              <% end %>
-              &emsp; &emsp;
-              <% if user_signed_in? && current_user.id == t.user_id %>  
-                  <%= link_to edit_post_path(t.id)  do %>
-                      <i class="fas fa-wrench fa-2x"></i>
+                      <i class="far fa-grin-squint fa-2x"></i><%= t.likes.count %>
                   <% end %>
                   &emsp; &emsp;
-                  <%= link_to post_path(t.id), method: :delete do %>
-                      <i class="fas fa-trash-alt fa-2x"></i>
+                  <% if user_signed_in? && current_user.id == t.user_id %>  
+                      <%= link_to edit_post_path(t.id)  do %>
+                          <i class="fas fa-wrench fa-2x"></i>
+                      <% end %>
+                      &emsp; &emsp;
+                      <%= link_to post_path(t.id), method: :delete do %>
+                          <i class="fas fa-trash-alt fa-2x"></i>
+                      <% end %>
                   <% end %>
-              <% end %>
-            </p>
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
-  <div class="centers">
-    <%= paginate @posts %>
-  </div>
-</div>
+      <div class="centers">
+        <%= paginate @posts %>
+      </div>
+    </div>
     <div class= "margin2">
     </div>
-
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/6-1-6/js/6-1-6.js"></script>
-
     <%# <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> %>
-
-</body>
+  </body>
 </html>
 
 

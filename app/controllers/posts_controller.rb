@@ -16,8 +16,9 @@ class PostsController < ApplicationController
 
         @post = Post.new
         # @posts_latest3 = @posts.first(3)
-        @post3s = Post.limit(3).order(created_at: :desc)
+        # @post3s = Post.limit(3).order(:created_at)
         # @pv_ranking = Post.find(Impression.group(:impressionable_id).order('count(impressionable_id) desc').limit(3).pluck(:impressionable_id))
+        @rank_posts = Post.all.sort {|a,b| b.liked_users.count <=> a.liked_users.count}.first(3)
     end
 
     def new
