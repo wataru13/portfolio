@@ -13,7 +13,7 @@
                 <% if @post.image.present?%>
                     <p><%= image_tag @post.image_url, class:"card-img-top" if @post.image? %></p>
                 <% else %>
-                    <a href="/posts/<%= @post.id %>"><img src="noimg.jpg" alt="" class="card-img-top" ></a>
+                    <a href="/posts/<%= @post.id %>"><%= image_tag '/noimg.jpg' ,class:"card-img-top"%></a>
                 <% end %>
                 <div class="card-content_07">
                     <p class="card-title_07">
@@ -24,7 +24,7 @@
                             <% if @post.user.image.present?%>
                                 <%= image_tag @post.user.image_url, size: "80x80", class:"rounded-circle" if @post.user.image? %>
                             <% else %>
-                                <img src="0images.png" alt="" class="rounded-circle u80" >
+                                <%= image_tag '/0images.png' ,class:"rounded-circle u80" %>
                             <% end %>
                             &emsp;
                             <%= link_to @post.user.name, @post.user %>
